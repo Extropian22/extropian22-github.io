@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="240" viewBox="0 0 200 240">
+  <style>
+    .hex-outline { fill: none; stroke: #FFD700; stroke-width: 4; }
+    .inner-shape { fill: #5D3891; }
+    .diagonal { fill: #FFD700; }
+    .text-main { fill: #FFFFFF; font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; }
+    .text-sub { fill: #FFD700; font-family: Arial, sans-serif; font-size: 16px; }
+  </style>
+  <g>
+    <!-- Hexagon with geometric pattern -->
+    <path class="hex-outline" d="M100,10 L180,50 L180,150 L100,190 L20,150 L20,50 Z"/>
+    <path class="hex-outline" d="M100,10 L140,30 L100,50 L60,30 Z"/>
+    <path class="hex-outline" d="M180,50 L160,90 L140,70"/>
+    <path class="hex-outline" d="M20,50 L40,90 L60,70"/>
+    <path class="hex-outline" d="M180,150 L160,110 L140,130"/>
+    <path class="hex-outline" d="M20,150 L40,110 L60,130"/>
+    
+    <!-- Inner shapes -->
+    <path class="inner-shape" d="M70,70 L130,70 L130,130 L70,130 Z"/>
+    <path class="diagonal" d="M70,70 L130,130"/>
+    
+    <!-- Text -->
+    <text class="text-main" x="100" y="210" text-anchor="middle">EXTROPIAN</text>
+    <text class="text-main" x="100" y="235" text-anchor="middle">JANUZ</text>
+    <text class="text-sub" x="100" y="255" text-anchor="middle">BLOCKCHAIN</text>
+  </g>
+</svg>

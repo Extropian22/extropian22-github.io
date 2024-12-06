@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <style>
+    .ipfs-text { fill: #64ffda; font-family: Consolas, monospace; font-size: 12px; }
+    .ipfs-logo { fill: #64ffda; }
+  </style>
+  <g opacity="0.2">
+    <!-- IPFS Logo -->
+    <path class="ipfs-logo" d="M100,20 L140,40 L140,80 L100,100 L60,80 L60,40 Z"/>
+    <path class="ipfs-logo" d="M100,100 L140,120 L140,160 L100,180 L60,160 L60,120 Z"/>
+    <!-- IPFS Text -->
+    <text class="ipfs-text" x="50%" y="95%" text-anchor="middle">
+      bafkreid2nemwpb5ljgypc3qldibxevwexqkskbwv3di2ercu7552updoly
+    </text>
+  </g>
+</svg>

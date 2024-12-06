@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <style>
+    .pi-circle { stroke: #5D3891; }
+    .pi-symbol { fill: #FFB347; font-family: "Times New Roman", serif; font-size: 80px; font-weight: bold; }
+    .pi-text { fill: #FFB347; font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; }
+  </style>
+  <g>
+    <!-- Pi Network Logo -->
+    <circle class="pi-circle" cx="100" cy="100" r="80" fill="none" stroke-width="8"/>
+    <!-- Orange Pi Symbol -->
+    <text class="pi-symbol" x="100" y="120" text-anchor="middle">π</text>
+    <!-- Pay with Pi Text -->
+    <text class="pi-text" x="100" y="160" text-anchor="middle">Pay with Pi</text>
+  </g>
+</svg>
