@@ -16,6 +16,32 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="canonical" href="https://extropian22.github.io/extropian22-github.io/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Extropian Janus",
+      "url": "https://extropian22.github.io/extropian22-github.io/",
+      "jobTitle": "Blockchain & Web Developer",
+      "description": "Professional Blockchain & Web Developer specializing in Pi Network, DApps, and modern web solutions",
+      "knowsAbout": ["Blockchain Development", "Web Development", "Pi Network", "Smart Contracts", "DApps", "Cryptocurrency"],
+      "makesOffer": {
+        "@type": "Offer",
+        "itemOffered": [
+          {
+            "@type": "Service",
+            "name": "Web Development",
+            "description": "Website Design and Development, E-commerce Platform Development, Custom Web Application Development"
+          },
+          {
+            "@type": "Service",
+            "name": "Blockchain Development",
+            "description": "Smart Contract Development, Decentralized Application (DApp) Development, Blockchain Integration"
+          }
+        ]
+      }
+    }
+    </script>
 </head>
 <body>
     <div class="stars"></div>
@@ -24,20 +50,20 @@
     <img src="images/extropian-logo.svg" class="company-logo" alt="Extropian Januz Blockchain">
     
     <header>
-        <nav>
-            <div class="logo"><i class="fas fa-rocket"></i> Extropian Janus</div>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#payment">Payment</a></li>
-                <li><a href="#contact">Contact</a></li>
+        <nav aria-label="Main navigation">
+            <div class="logo" role="banner"><i class="fas fa-rocket" aria-hidden="true"></i> Extropian Janus</div>
+            <ul role="menubar">
+                <li role="menuitem"><a href="#home">Home</a></li>
+                <li role="menuitem"><a href="#services">Services</a></li>
+                <li role="menuitem"><a href="#portfolio">Portfolio</a></li>
+                <li role="menuitem"><a href="#payment">Payment</a></li>
+                <li role="menuitem"><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section id="home" class="hero">
+        <section id="home" class="hero" role="banner">
             <div class="terminal-window">
                 <div class="terminal-header">
                     <span class="terminal-button"></span>
@@ -53,8 +79,8 @@
             <p>Exploring the Digital Universe</p>
         </section>
 
-        <section id="services">
-            <h2><i class="fas fa-satellite"></i> Services</h2>
+        <section id="services" role="region" aria-labelledby="services-heading">
+            <h2 id="services-heading"><i class="fas fa-satellite" aria-hidden="true"></i> Services</h2>
             <div class="services-grid">
                 <div class="service-card">
                     <i class="fas fa-code"></i>
@@ -87,8 +113,8 @@
             </div>
         </section>
 
-        <section id="portfolio">
-            <h2><i class="fas fa-rocket"></i> Featured Projects</h2>
+        <section id="portfolio" role="region" aria-labelledby="portfolio-heading">
+            <h2 id="portfolio-heading"><i class="fas fa-rocket" aria-hidden="true"></i> Featured Projects</h2>
             <div class="portfolio-grid">
                 <div class="portfolio-card">
                     <div class="portfolio-image">
@@ -155,8 +181,8 @@
             </div>
         </section>
 
-        <section id="payment">
-            <h2><i class="fas fa-meteor"></i> Payment Methods</h2>
+        <section id="payment" role="region" aria-labelledby="payment-heading">
+            <h2 id="payment-heading"><i class="fas fa-meteor" aria-hidden="true"></i> Payment Methods</h2>
             <div class="payment-options">
                 <div class="payment-card">
                     <i class="fab fa-bitcoin"></i>
@@ -171,10 +197,10 @@
             </div>
         </section>
 
-        <section id="contact">
-            <h2><i class="fas fa-satellite-dish"></i> Get in Touch</h2>
+        <section id="contact" role="region" aria-labelledby="contact-heading">
+            <h2 id="contact-heading"><i class="fas fa-satellite-dish" aria-hidden="true"></i> Get in Touch</h2>
             <div class="contact-container">
-                <form id="contactForm" action="https://formspree.io/f/xwpkzdgq" method="POST">
+                <form id="contactForm" action="https://formspree.io/f/xwpkzdgq" method="POST" role="form" aria-label="Contact form">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" required>
