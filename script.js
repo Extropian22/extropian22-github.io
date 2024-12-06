@@ -8,22 +8,75 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Form submission handling
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+// Contact Form Handling
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formStatus = document.getElementById('formStatus');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const subject = form.querySelector('#subject').value;
+    
+    try {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         
-        // Get form data
-        const formData = new FormData(contactForm);
-        const data = Object.fromEntries(formData);
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
         
-        // Here you would typically send the data to your backend
-        // For now, we'll just show a success message
-        alert('Thank you for your message! We will get back to you soon.');
-        contactForm.reset();
-    });
-}
+        const data = await response.json();
+        
+        if (response.ok) {
+            // Create custom thank you message
+            const thankYouMessage = `
+                <div class="thank-you-message">
+                    <h3>Thank you for reaching out!</h3>
+                    <p>I have received your message regarding "${subject}".</p>
+                    <p>I will review your inquiry and get back to you as soon as possible.</p>
+                    <p>Best regards,<br>
+                    Extropian Januz<br>
+                    Blockchain & Web Development</p>
+                </div>
+            `;
+            
+            // Replace form with thank you message
+            const contactContainer = document.querySelector('.contact-container');
+            contactContainer.innerHTML = thankYouMessage;
+            
+            // Scroll to message
+            contactContainer.scrollIntoView({ behavior: 'smooth' });
+            
+            // Reset form (though it's hidden now)
+            form.reset();
+            
+            // Restore form after 10 seconds
+            setTimeout(() => {
+                contactContainer.innerHTML = form.outerHTML;
+                // Reattach event listener to new form
+                document.getElementById('contactForm').addEventListener('submit', arguments.callee);
+            }, 10000);
+        } else {
+            throw new Error(data.error || 'Something went wrong!');
+        }
+    } catch (error) {
+        formStatus.className = 'form-status error';
+        formStatus.textContent = error.message;
+        formStatus.style.display = 'block';
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+        formStatus.style.display = 'block';
+        
+        // Hide status message after 5 seconds
+        setTimeout(() => {
+            formStatus.style.display = 'none';
+        }, 5000);
+    }
+});
 
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
