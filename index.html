@@ -181,6 +181,19 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" rows="5" required></textarea>
                     </div>
+                    <input type="hidden" name="_autoresponse" value="Thank you for contacting Extropian Januz
+
+Dear {name},
+
+Thank you for reaching out! I have received your message regarding {subject}.
+
+I will review your inquiry and get back to you as soon as possible.
+
+Best regards,
+Extropian Januz
+Blockchain & Web Development">
+                    <input type="hidden" name="_replyto" value="%email%">
+                    <input type="hidden" name="_subject" value="Thank you for contacting Extropian Januz">
                     <button type="submit" class="submit-btn">
                         <i class="fas fa-paper-plane"></i> Send Message
                     </button>
