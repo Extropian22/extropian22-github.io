@@ -21,29 +21,57 @@ body {
     overflow-x: hidden;
 }
 
-/* Stars Background (Now Moving) */
+/* Stars Background (Moving) */
 .stars {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    /* Star image background */
     background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABR0RVh0Q3JlYXRpb24gVGltZQAzLzEvMTNoZNRjAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABx0RVh0Q3JlYXRpb24gVGltZQAxMS8yNC8xMyAtIDE6MjP+JH4WAAAACHRFWHRBdXRob3IAcmFkAAAACXRFWHRDb3B5cmlnaHQAcmFkAAAABXRFWHRUaXRsZQBzdGFyc5nLX9kAAAAVdEVYdERlc2NyaXB0aW9uAHN0YXJzIGljb26Z9zpHAAAAEXRFWHRTb2Z0d2FyZQBTbmFwc2hvdF+QF9QAAAA5dEVYdFNvdXJjZQBodHRwOi8vd3d3LnNuYXBzaG90LmNvbS9kb3dubG9hZC9zdGFycy1pY29uLTI1NngxMjhoMmh6cQAAAABJRU5ErkJggg==') repeat top center;
     z-index: -3;
-    will-change: background-position; /* Changed from transform to background-position */
-    transform: translateZ(0); /* Keep hardware acceleration hint */
-    /* Add animation for movement */
-    animation: moveStars 200s linear infinite; /* ADDED */
+    will-change: background-position;
+    transform: translateZ(0); /* Hardware acceleration hint */
+    /* Animation for movement */
+    animation: moveStars 200s linear infinite;
+    overflow: hidden; /* Hide generated stars spilling outside */
 }
 
 /* Define the star movement animation */
-@keyframes moveStars { /* ADDED */
+@keyframes moveStars {
   from { background-position: 0 0; }
   to { background-position: -10000px 5000px; } /* Moves diagonally */
 }
 
+/* Styling for dynamically generated stars (optional) */
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    /* Static properties */
+}
 
-/* Removed .twinkling class and @keyframes twinkle */
+/* Galaxy Background */
+.galaxy {
+    position: fixed; /* Fixed position */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/galaxy.png') no-repeat center center; /* UPDATE PATH if needed */
+    background-size: cover;
+    animation: galaxyRotation 120s linear infinite; /* Slower rotation */
+    z-index: -2; /* Behind stars */
+    opacity: 0.4; /* Subtle */
+}
+
+@keyframes galaxyRotation {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.05); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
 
 .terminal-window {
     background: var(--dark-bg);
@@ -79,18 +107,31 @@ body {
 .terminal-content {
     font-family: 'Consolas', monospace;
     color: var(--secondary-color);
+    min-height: 60px; /* Ensure space for text */
 }
 
 .cursor {
+    display: inline-block; /* Ensure it behaves correctly */
+    background-color: var(--secondary-color);
+    width: 10px;
+    height: 1.2em;
+    margin-left: 2px;
+    vertical-align: text-bottom;
     animation: blink 1s infinite;
 }
+
+.cursor.typing {
+    /* Optional: slightly different look while typing */
+    opacity: 0.5;
+}
+
 
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
 }
 
-.cursor-trail {
+.cursor-trail { /* This seems unused currently, but kept */
     position: fixed;
     width: 3px;
     height: 3px;
@@ -114,22 +155,43 @@ header {
     background: rgba(10, 25, 47, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+    position: sticky; /* Make header sticky */
+    top: 0;
+    z-index: 100; /* Ensure header is above most content */
+    width: 100%;
 }
 
 .logo {
     color: var(--secondary-color);
     text-shadow: var(--neon-glow);
+    font-size: 1.5rem; /* Example size */
+    padding: 0.5rem 0; /* Add padding */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem; /* Add horizontal padding */
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
 }
 
 nav ul li {
     position: relative;
     transition: transform 0.3s ease;
+    margin-left: 1.5rem; /* Space out nav items */
 }
 
 nav ul li::before {
     content: '';
     position: absolute;
-    bottom: -2px;
+    bottom: -5px; /* Adjust position relative to text */
     left: 0;
     width: 0;
     height: 2px;
@@ -147,6 +209,9 @@ nav ul li:hover::before {
 
 nav ul li a {
     color: var(--text-color);
+    text-decoration: none; /* Remove underline */
+    padding: 0.5rem 0; /* Add clickable area */
+    display: block; /* Ensure padding works */
     transition: color 0.3s, text-shadow 0.3s;
 }
 
@@ -158,52 +223,69 @@ nav ul li a:hover {
 .hero {
     background: transparent;
     position: relative;
+    min-height: calc(100vh - 60px); /* Example height minus header */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
 }
+
 
 h1, h2, h3 {
     color: var(--secondary-color);
     text-shadow: var(--neon-glow);
 }
 
+h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem;}
+.hero p { font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--text-color);}
+h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 2rem;}
+h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); margin-bottom: 1rem;}
+
+
 .service-card {
     background: var(--light-bg);
-    border: 1px solid var(--secondary-color);
-    box-shadow: 0 0 15px rgba(100, 255, 218, 0.1);
+    border: 1px solid rgba(100, 255, 218, 0.2); /* Softer border */
+    box-shadow: 0 5px 15px rgba(10, 25, 47, 0.5); /* Adjusted shadow */
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 2rem;
-    border-radius: 15px;
+    border-radius: 10px; /* Consistent radius */
     position: relative;
     overflow: hidden;
-    min-height: 300px;
+    /* min-height: 300px; Let content define height */
     will-change: transform;
 }
 
 .service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
+    transform: translateY(-8px); /* Slightly less lift */
+    box-shadow: 0 8px 25px rgba(100, 255, 218, 0.2); /* Enhanced hover shadow */
 }
 
 /* Styles for the main icon in the service card */
-.service-card > i { /* Use > to target only direct children icons */
-    font-size: 3rem; /* Keep this for the main card icon */
+.service-card > i {
+    font-size: 2.5rem; /* Slightly smaller */
     color: var(--secondary-color);
     margin-bottom: 1rem;
+    display: block; /* Center icon */
+    text-align: center;
     transition: transform 0.3s;
 }
 
-.service-card:hover > i { /* Use > */
-    transform: scale(1.2);
+.service-card:hover > i {
+    transform: scale(1.1); /* Slightly smaller scale */
 }
 
 .service-card h3 {
     color: var(--secondary-color);
+    text-align: center;
     margin-bottom: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .service-details {
-    margin-top: 1.5rem;
+    margin-top: 1rem; /* Reduced margin */
 }
 
 .service-details ul {
@@ -213,26 +295,26 @@ h1, h2, h3 {
 
 .service-details ul li {
     position: relative;
-    padding-left: 25px; /* Keep space for the dot */
-    margin-bottom: 10px;
+    padding-left: 20px; /* Adjusted space for the dot */
+    margin-bottom: 0.7rem; /* Reduced spacing */
     opacity: 0;
     transform: translateX(-20px);
     animation: fadeInSlide 0.5s ease forwards;
-    /* Inherit alignment */
     display: flex;
     align-items: center;
     color: var(--text-color);
+    font-size: 0.95rem; /* Adjusted font size */
     transition: transform 0.3s, color 0.3s;
 }
 
 /* Animation delays */
 .service-details ul li:nth-child(1) { animation-delay: 0.1s; }
-.service-details ul li:nth-child(2) { animation-delay: 0.2s; }
-.service-details ul li:nth-child(3) { animation-delay: 0.3s; }
-.service-details ul li:nth-child(4) { animation-delay: 0.4s; }
-.service-details ul li:nth-child(5) { animation-delay: 0.5s; }
-.service-details ul li:nth-child(6) { animation-delay: 0.6s; }
-.service-details ul li:nth-child(7) { animation-delay: 0.7s; }
+.service-details ul li:nth-child(2) { animation-delay: 0.15s; }
+.service-details ul li:nth-child(3) { animation-delay: 0.2s; }
+.service-details ul li:nth-child(4) { animation-delay: 0.25s; }
+.service-details ul li:nth-child(5) { animation-delay: 0.3s; }
+.service-details ul li:nth-child(6) { animation-delay: 0.35s; }
+.service-details ul li:nth-child(7) { animation-delay: 0.4s; }
 
 /* --- Styling for the list item icon (glowing dot) --- */
 .service-details ul li i {
@@ -240,256 +322,207 @@ h1, h2, h3 {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
-
-    /* Dot Styling */
-    display: inline-block; /* Or block */
-    width: 8px;           /* Size of the dot */
-    height: 8px;          /* Size of the dot */
-    background-color: var(--secondary-color); /* Dot color */
-    border-radius: 50%;   /* Make it round */
-
-    /* Glow Effect */
-    box-shadow: 0 0 8px var(--secondary-color);
-
-    /* Reset potential Font Awesome styles if class is still present */
-    font-size: 0; /* Hide potential icon character */
-    line-height: 0; /* Hide potential icon character */
-    color: transparent; /* Hide potential icon character */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: inline-block;
+    width: 7px; /* Slightly smaller dot */
+    height: 7px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--secondary-color); /* Adjusted glow */
+    /* Reset Font Awesome styles */
+    font-size: 0; line-height: 0; color: transparent;
 }
 /* --- End of Glowing Dot Styling --- */
 
 
 .service-details ul li:hover {
-    transform: translateX(10px);
+    transform: translateX(5px); /* Subtle hover shift */
     color: var(--secondary-color);
 }
 
-/* Optional: Enhance glow on hover for the dot */
 .service-details ul li:hover i {
-    transform: translateY(-50%) scale(1.2); /* Keep scale effect */
-    box-shadow: 0 0 12px var(--secondary-color); /* Slightly stronger glow */
+    transform: translateY(-50%) scale(1.2);
+    box-shadow: 0 0 10px var(--secondary-color);
 }
 
 
 @keyframes fadeInSlide {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 .payment-card {
     background: var(--light-bg);
-    border: 1px solid var(--secondary-color);
-    box-shadow: 0 0 15px rgba(100, 255, 218, 0.1);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    box-shadow: 0 5px 15px rgba(10, 25, 47, 0.5);
     transition: transform 0.3s, box-shadow 0.3s;
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
 }
 
 .payment-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+    box-shadow: 0 8px 25px rgba(100, 255, 218, 0.2);
 }
 
 .payment-card i {
     color: var(--secondary-color);
     text-shadow: var(--neon-glow);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.payment-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+.payment-card p {
+    font-size: 0.9rem;
+    color: var(--text-color);
 }
 
 input, textarea {
-    background: var(--light-bg);
-    border: 1px solid var(--secondary-color);
+    background: var(--dark-bg); /* Darker input background */
+    border: 1px solid rgba(100, 255, 218, 0.3); /* Softer border */
     color: var(--text-color);
-    transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s, border-color 0.3s;
+    padding: 0.8rem;
+    border-radius: 5px; /* Consistent radius */
+    width: 100%; /* Ensure full width */
+    font-family: inherit; /* Use body font */
+    font-size: 1rem;
 }
 
 input:focus, textarea:focus {
     outline: none;
-    box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.2);
+    border-color: var(--secondary-color); /* Highlight border on focus */
 }
 
-button {
+button, .btn { /* Style buttons consistently */
     background: transparent;
     color: var(--secondary-color);
     border: 1px solid var(--secondary-color);
-    transition: background 0.3s, box-shadow 0.3s;
+    padding: 0.7rem 1.5rem; /* Adjusted padding */
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    text-decoration: none; /* For link buttons */
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.2s;
 }
 
-button:hover {
-    background: rgba(100, 255, 218, 0.1);
-    box-shadow: var(--neon-glow);
+button:hover, .btn:hover {
+    background: var(--secondary-color);
+    color: var(--primary-color); /* High contrast text */
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+    transform: translateY(-2px);
 }
 
-.ipfs-watermark {
-    position: fixed;
-    left: 20px;
-    z-index: 1000;
-    width: 100px;
-    height: 100px;
-    opacity: 0.3;
-    transition: opacity 0.3s, transform 0.3s;
-}
-
-.ipfs-watermark:hover {
-    opacity: 0.8;
-    transform: scale(1.1);
-}
-
-.ipfs-watermark.top {
-    top: 20px;
-}
-
-.ipfs-watermark.bottom {
-    bottom: 20px;
-}
-
-.ipfs-watermark img {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0 0 5px var(--secondary-color));
-}
+/* Removed IPFS watermark styles */
 
 .pi-watermark {
     position: fixed;
     left: 20px;
-    z-index: 1000;
-    width: 120px;
-    height: 120px;
-    opacity: 0.6;
+    z-index: 50; /* Below header */
+    width: 100px; /* Slightly smaller */
+    height: 100px;
+    opacity: 0.5;
     transition: opacity 0.3s, transform 0.3s;
     animation: float 6s ease-in-out infinite;
 }
 
 .pi-watermark:hover {
-    opacity: 1;
+    opacity: 0.9;
     transform: scale(1.1) rotate(5deg);
 }
 
-.pi-watermark.top {
-    top: 20px;
-}
-
-.pi-watermark.bottom {
-    bottom: 20px;
-}
+.pi-watermark.top { top: 80px; } /* Below sticky header */
+.pi-watermark.bottom { bottom: 20px; }
 
 .pi-watermark img {
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 0 10px rgba(93, 56, 145, 0.5));
+    filter: drop-shadow(0 0 8px rgba(93, 56, 145, 0.4));
 }
 
 @keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); } /* Less float */
 }
 
 .company-logo {
     position: fixed;
-    top: 20px;
+    top: 15px; /* Align with header padding */
     right: 20px;
-    width: 150px;
+    width: 120px; /* Adjusted size */
     height: auto;
-    z-index: 1000;
-    animation: logoFloat 6s ease-in-out infinite;
+    z-index: 110; /* Above header content */
+    animation: logoFloat 7s ease-in-out infinite 1s; /* Slower, delayed */
     transition: transform 0.3s;
 }
 
 .company-logo:hover {
-    transform: scale(1.1) rotate(-5deg);
+    transform: scale(1.1) rotate(-3deg); /* Less rotation */
 }
 
 @keyframes logoFloat {
-    0% {
-        transform: translateY(0px) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-10px) rotate(5deg);
-    }
-    100% {
-        transform: translateY(0px) rotate(0deg);
-    }
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-6px) rotate(3deg); } /* Less float/rotation */
 }
 
 footer {
     background: var(--dark-bg);
     border-top: 1px solid rgba(100, 255, 218, 0.1);
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
+    padding: 1.5rem 1rem; /* Added padding */
+    text-align: center;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-top: 4rem; /* Space above footer */
 }
 
 main {
-    margin-top: 60px;
+    /* Removed margin-top, handled by header height/hero padding */
 }
 
 section {
     padding: 4rem 2rem;
-    max-width: 1200px;
+    max-width: 1100px; /* Adjusted max width */
     margin: 0 auto;
 }
 
-.services-grid, .payment-options {
+.services-grid, .payment-options, .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted minmax */
+    gap: 1.5rem; /* Slightly reduced gap */
     margin-top: 2rem;
 }
 
-#contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 600px;
-    margin: 2rem auto;
-}
-
-.portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 2rem 0;
-}
-
+/* Portfolio Card Styles */
 .portfolio-card {
     position: relative;
-    border-radius: 15px;
+    border-radius: 10px;
     overflow: hidden;
     background: var(--light-bg);
-    border: 1px solid var(--secondary-color);
+    border: 1px solid rgba(100, 255, 218, 0.2);
     transition: all 0.4s ease;
+    box-shadow: 0 5px 15px rgba(10, 25, 47, 0.5);
 }
 
 .portfolio-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(100, 255, 218, 0.2);
 }
 
 .portfolio-image {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 4/3;
+    aspect-ratio: 16 / 10; /* Adjusted aspect ratio */
 }
 
 .portfolio-image img {
@@ -500,23 +533,21 @@ section {
 }
 
 .portfolio-card:hover .portfolio-image img {
-    transform: scale(1.1);
+    transform: scale(1.05); /* Subtler scale */
 }
 
 .portfolio-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(10, 25, 47, 0.95);
+    inset: 0; /* Covers entire area */
+    background: linear-gradient(to top, rgba(10, 25, 47, 0.95) 20%, rgba(10, 25, 47, 0.7) 60%, transparent); /* Gradient overlay */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end; /* Content at bottom */
     align-items: center;
-    padding: 2rem;
+    padding: 1.5rem;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
+    text-align: center;
 }
 
 .portfolio-card:hover .portfolio-overlay {
@@ -525,10 +556,10 @@ section {
 
 .portfolio-overlay h3 {
     color: var(--secondary-color);
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    transform: translateY(-20px);
-    transition: transform 0.3s ease;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    transform: translateY(10px);
+    transition: transform 0.4s ease 0.1s; /* Delayed transition */
 }
 
 .portfolio-card:hover .portfolio-overlay h3 {
@@ -536,11 +567,12 @@ section {
 }
 
 .portfolio-overlay p {
-    color: var(--text-color);
-    text-align: center;
-    margin-bottom: 1.5rem;
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
+    color: #ccd6f6; /* Lighter text for overlay */
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    transform: translateY(10px);
+    transition: transform 0.4s ease 0.2s; /* Delayed transition */
+    max-width: 90%; /* Prevent text overflowing */
 }
 
 .portfolio-card:hover .portfolio-overlay p {
@@ -548,25 +580,23 @@ section {
 }
 
 .portfolio-links {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    transform: translateY(10px);
+    opacity: 0;
+    transition: transform 0.4s ease 0.3s, opacity 0.4s ease 0.3s; /* Delayed transition */
+}
+
+.portfolio-card:hover .portfolio-links {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .portfolio-links .btn {
-    background: transparent;
-    border: 2px solid var(--secondary-color);
-    color: var(--secondary-color);
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.portfolio-links .btn:hover {
-    background: var(--secondary-color);
-    color: var(--dark-bg);
+    /* Inherits base button styles */
+    padding: 0.4rem 0.8rem; /* Smaller buttons */
+    font-size: 0.9rem;
+    margin: 0 0.3rem; /* Space between buttons */
+    border-width: 1px;
 }
 
 .tech-stack {
@@ -574,26 +604,35 @@ section {
     flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: center;
+    margin-top: 0.5rem; /* Space above tech stack */
+    transform: translateY(10px);
+    opacity: 0;
+    transition: transform 0.4s ease 0.4s, opacity 0.4s ease 0.4s; /* Delayed transition */
+}
+
+.portfolio-card:hover .tech-stack {
+     transform: translateY(0);
+    opacity: 1;
 }
 
 .tech-stack span {
     background: rgba(100, 255, 218, 0.1);
     color: var(--secondary-color);
-    padding: 0.25rem 0.75rem;
+    padding: 0.2rem 0.6rem;
     border-radius: 15px;
-    font-size: 0.9rem;
-    border: 1px solid var(--secondary-color);
+    font-size: 0.8rem;
+    border: 1px solid rgba(100, 255, 218, 0.3);
 }
 
 /* Contact Form Styles */
 .contact-container {
-    max-width: 600px;
+    max-width: 700px; /* Slightly wider */
     margin: 0 auto;
-    padding: 2rem;
+    padding: 2.5rem;
     background: var(--light-bg);
-    border: 1px solid var(--secondary-color);
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(100, 255, 218, 0.1);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(10, 25, 47, 0.6);
 }
 
 .form-group {
@@ -604,318 +643,183 @@ section {
     display: block;
     color: var(--secondary-color);
     margin-bottom: 0.5rem;
-    font-size: 1rem;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 0.8rem;
-    background: var(--dark-bg);
-    border: 1px solid var(--secondary-color);
-    border-radius: 5px;
-    color: var(--text-color);
-    font-family: 'Consolas', monospace;
-    transition: all 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
-    border-color: var(--secondary-color);
+    font-size: 0.9rem; /* Smaller label */
+    font-weight: bold;
 }
 
 .submit-btn {
-    background: transparent;
-    color: var(--secondary-color);
-    border: 2px solid var(--secondary-color);
-    padding: 0.8rem 2rem;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Consolas', monospace;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0 auto;
-    transition: all 0.3s ease;
-}
-
-.submit-btn:hover {
-    background: var(--secondary-color);
-    color: var(--dark-bg);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+    /* Inherits base button styles */
+    width: auto; /* Don't force full width */
+    margin: 1rem auto 0 auto; /* Center button */
+    display: block; /* Make margin auto work */
 }
 
 .form-status {
-    margin-top: 1rem;
-    padding: 1rem;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1rem;
     border-radius: 5px;
     text-align: center;
-    display: none;
+    font-size: 0.9rem;
+    display: none; /* Initially hidden */
 }
 
-.form-status.success {
+.form-status.info { background: rgba(100, 150, 255, 0.1); color: #a8c5ff; border: 1px solid rgba(100, 150, 255, 0.3); }
+.form-status.success { background: rgba(100, 255, 218, 0.1); color: var(--secondary-color); border: 1px solid rgba(100, 255, 218, 0.3); }
+.form-status.error { background: rgba(255, 100, 100, 0.1); color: #ff8a8a; border: 1px solid rgba(255, 100, 100, 0.3); }
+
+
+/* --- AI Chatbot Iframe Styling --- */
+#ai-assistant {
+    padding: 4rem 1rem; /* Adjusted padding */
+}
+
+#ai-assistant h2 {
+     text-align: center;
+     margin-bottom: 2rem; /* Increased space below heading */
+     font-size: clamp(1.8rem, 3.5vw, 2.5rem); /* Responsive heading */
+}
+#ai-assistant h2 i {
+    margin-right: 0.5rem; /* Space between icon and text */
+}
+
+#ai-assistant .chatbot-container {
+    max-width: 700px;    /* Adjusted max width */
+    height: 550px;       /* Adjusted height */
+    margin: 0 auto;
+    border: 1px solid rgba(100, 255, 218, 0.3); /* Softer border */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(10, 25, 47, 0.7); /* Stronger shadow */
+}
+
+#ai-assistant iframe {
     display: block;
-    background: rgba(100, 255, 218, 0.1);
-    color: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
-}
-
-.form-status.error {
-    display: block;
-    background: rgba(255, 100, 100, 0.1);
-    color: #ff6464;
-    border: 1px solid #ff6464;
-}
-
-.thank-you-message {
-    text-align: center;
-    padding: 2rem;
-    background: var(--light-bg);
-    border: 1px solid var(--secondary-color);
-    border-radius: 15px;
-    animation: fadeIn 0.5s ease-out;
-}
-
-.thank-you-message h3 {
-    color: var(--secondary-color);
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.thank-you-message p {
-    color: var(--text-color);
-    margin-bottom: 1rem;
-    line-height: 1.6;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Galaxy Background Animation */
-@keyframes galaxyRotation {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.galaxy {
-    position: absolute; /* Changed to absolute */
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    background: url('path/to/galaxy-image.png') no-repeat center center; /* Make sure this path is correct */
-    background-size: cover;
-    animation: galaxyRotation 60s linear infinite;
-    z-index: -2; /* Behind stars */
-    opacity: 0.5; /* Optional: make it subtle */
+    border: none;
 }
+/* --- End AI Chatbot Iframe Styling --- */
 
-.planet {
-    position: absolute;
-    border-radius: 50%;
-    background: radial-gradient(circle, #fff, #ccc);
-    animation: float 10s ease-in-out infinite; /* Uses the float animation defined earlier */
-}
 
-/* Removed starTwinkle keyframes and usage */
-
-/* Stars styling (no animation needed here now) */
-.stars {
-    /* Existing styles */
-    overflow: hidden; /* Keep this */
-    /* Animation is now defined above */
-}
-
-.star {
-    position: absolute;
-    background: white;
-    border-radius: 50%;
-    /* Removed animation: starTwinkle */
-    width: 2px;
-    height: 2px;
-    opacity: 0.7; /* Static opacity */
-}
-
-/* Constellations (no animation) */
+/* Constellations (Static Points) */
 .constellation {
     position: absolute;
-    width: 2px;
-    height: 2px;
-    background: white;
+    width: 1px; /* Smaller */
+    height: 1px;
+    background: rgba(255, 255, 255, 0.5); /* Dimmer */
     border-radius: 50%;
-    opacity: 0.8;
-    /* Removed animation: twinkle */
+    opacity: 0.6;
+    z-index: -1; /* Ensure they are behind animated objects */
 }
 
-#aries { left: 10%; top: 20%; }
-#taurus { left: 15%; top: 30%; }
-#gemini { left: 25%; top: 25%; }
-#cancer { left: 35%; top: 40%; }
-#leo { left: 45%; top: 15%; }
-#virgo { left: 55%; top: 50%; }
-#libra { left: 65%; top: 20%; }
-#scorpio { left: 75%; top: 35%; }
-#sagittarius { left: 85%; top: 10%; }
-#capricorn { left: 90%; top: 60%; }
-#aquarius { left: 80%; top: 70%; }
-#pisces { left: 70%; top: 80%; }
-
-/* Removed second @keyframes twinkle */
-
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    nav ul {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .hero h1 {
-        font-size: 2rem;
-    }
-
-    .service-card {
-        min-height: auto;
-    }
-
-    /* Adjust padding for dot */
-    .service-details ul li {
-        font-size: 0.9rem;
-        padding-left: 20px; /* Slightly less padding */
-    }
-
-    .service-details ul li i {
-       width: 6px; /* Smaller dot on mobile */
-       height: 6px;
-       box-shadow: 0 0 6px var(--secondary-color);
-    }
+/* Positioning remains the same */
+#aries { left: 10%; top: 20%; } #taurus { left: 15%; top: 30%; } #gemini { left: 25%; top: 25%; } #cancer { left: 35%; top: 40%; } #leo { left: 45%; top: 15%; } #virgo { left: 55%; top: 50%; } #libra { left: 65%; top: 20%; } #scorpio { left: 75%; top: 35%; } #sagittarius { left: 85%; top: 10%; } #capricorn { left: 90%; top: 60%; } #aquarius { left: 80%; top: 70%; } #pisces { left: 70%; top: 80%; }
 
 
-    .portfolio-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .portfolio-overlay {
-        opacity: 1;
-        background: rgba(10, 25, 47, 0.85);
-    }
-
-    .portfolio-overlay h3,
-    .portfolio-overlay p {
-        transform: translateY(0);
-    }
-
-    .contact-container {
-        padding: 1rem;
-    }
-
-    .submit-btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    /* Make background animation less demanding on mobile */
-    .stars {
-        animation-duration: 300s; /* Slower on mobile */
-    }
-    .galaxy {
-        animation-duration: 120s; /* Slower rotation */
-    }
-
+/* Space Objects */
+.spacecraft, .satellite, .rocket, .ufo {
+    position: absolute; /* Changed to absolute for better control within viewport */
+    z-index: -1; /* Behind content, above background */
+    will-change: transform, opacity; /* Performance hint */
+    /* Default positions overridden by animation */
+    top: 50%;
+    left: 50%;
 }
 
-.spacecraft {
-    position: absolute;
-    width: 50px;
-    height: 30px;
-    /* background: red; */ /* Use image or SVG instead */
-    background: url('images/spacecraft.svg') no-repeat center center; /* Example path */
-    background-size: contain;
-    animation: fly 25s linear infinite 5s; /* Slower, delayed start */
-}
+/* Use background images (replace paths) */
+.spacecraft { background: url('images/spacecraft.svg') no-repeat center center; background-size: contain; width: 50px; height: 30px; animation: fly 25s linear infinite 5s; }
+.satellite { background: url('images/satellite.svg') no-repeat center center; background-size: contain; width: 40px; height: 40px; animation: orbit 30s linear infinite; }
+.rocket { background: url('images/rocket.svg') no-repeat center center; background-size: contain; width: 30px; height: 70px; animation: launch 15s ease-in infinite 2s; }
+.ufo { background: url('images/ufo.svg') no-repeat center center; background-size: contain; width: 60px; height: 35px; animation: hover 12s ease-in-out infinite; }
 
-.satellite {
-    position: absolute;
-    width: 40px; /* Adjusted size */
-    height: 40px; /* Adjusted size */
-    /* background: blue; */
-    background: url('images/satellite.svg') no-repeat center center; /* Example path */
-    background-size: contain;
-    animation: orbit 30s linear infinite; /* Slower */
-}
 
-.rocket {
-    position: absolute;
-    width: 30px; /* Adjusted size */
-    height: 70px; /* Adjusted size */
-    /* background: green; */
-    background: url('images/rocket.svg') no-repeat center center; /* Example path */
-    background-size: contain;
-    animation: launch 15s ease-in infinite 2s; /* Slower, ease-in, delayed start */
-}
-
-.ufo {
-    position: absolute;
-    width: 60px; /* Adjusted size */
-    height: 35px; /* Adjusted size */
-    /* background: yellow; */
-    background: url('images/ufo.svg') no-repeat center center; /* Example path */
-    background-size: contain;
-    animation: hover 12s ease-in-out infinite;
-}
-
+/* Animations (Adjusted for absolute positioning & smoother feel) */
 @keyframes fly {
-    0% { transform: translateX(-100px); top: 10%; opacity: 0; } /* Start off screen */
+    0% { transform: translateX(-100px); top: 10%; opacity: 0; }
     10% { opacity: 1; }
     90% { opacity: 1; }
-    100% { transform: translateX(calc(100vw + 100px)); top: 15%; opacity: 0;} /* End off screen */
+    100% { transform: translateX(calc(100vw + 100px)); top: 15%; opacity: 0;}
 }
 
-@keyframes orbit {
-    from { transform: rotate(0deg) translateX(20vw) rotate(0deg); } /* Adjust orbit radius */
-    to { transform: rotate(360deg) translateX(20vw) rotate(-360deg); }
+@keyframes orbit { /* Orbit around center of viewport */
+    from { transform: translate(-50%, -50%) rotate(0deg) translateX(35vw) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg) translateX(35vw) rotate(-360deg); }
 }
 
 @keyframes launch {
-    0% { transform: translateY(100vh) rotate(-5deg); left: 20%; opacity: 0; } /* Start below screen */
-    10% { opacity: 1; transform: translateY(90vh) rotate(-5deg); }
+    0% { transform: translateY(100vh) translateX(-50%) rotate(-5deg); left: 20%; opacity: 0; }
+    10% { opacity: 1; transform: translateY(90vh) translateX(-50%) rotate(-5deg); }
     90% { opacity: 1; }
-    100% { transform: translateY(-100px) rotate(5deg); left: 25%; opacity: 0; } /* End above screen */
+    100% { transform: translateY(-100px) translateX(-50%) rotate(5deg); left: 25%; opacity: 0; }
 }
 
 @keyframes hover {
-    0% { transform: translateY(0) translateX(0) rotate(0); top: 75%; left: 80%; opacity: 0.7;}
-    25% { transform: translateY(-15px) translateX(10px) rotate(3deg); opacity: 1;}
-    50% { transform: translateY(5px) translateX(-10px) rotate(-3deg); opacity: 0.8;}
-    75% { transform: translateY(-5px) translateX(5px) rotate(1deg); opacity: 1;}
-    100% { transform: translateY(0) translateX(0) rotate(0); top: 75%; left: 80%; opacity: 0.7;}
+    0% { transform: translate(-50%, -50%) translateY(0) translateX(0) rotate(0); top: 75%; left: 80%; opacity: 0.7;}
+    25% { transform: translate(-50%, -50%) translateY(-15px) translateX(10px) rotate(3deg); opacity: 1;}
+    50% { transform: translate(-50%, -50%) translateY(5px) translateX(-10px) rotate(-3deg); opacity: 0.8;}
+    75% { transform: translate(-50%, -50%) translateY(-5px) translateX(5px) rotate(1deg); opacity: 1;}
+    100% { transform: translate(-50%, -50%) translateY(0) translateX(0) rotate(0); top: 75%; left: 80%; opacity: 0.7;}
 }
 
-/* Ensure space elements are behind content but above background */
-.spacecraft, .satellite, .rocket, .ufo {
- z-index: -1; /* Or adjust as needed relative to stars/galaxy */
- top: 50%; /* Default position, overridden by keyframes */
- left: 50%; /* Default position, overridden by keyframes */
-}
 
-/* Adjust Galaxy position and z-index */
-.galaxy {
-    z-index: -2; /* Ensure galaxy is behind stars */
-    position: fixed; /* Keep fixed for full background effect */
-    opacity: 0.4; /* Adjust opacity */
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: center; /* Center items */
+        padding: 0.5rem 1rem;
+    }
+    nav ul {
+        margin-top: 0.5rem;
+        flex-wrap: wrap; /* Allow wrapping */
+        justify-content: center;
+    }
+    nav ul li {
+        margin: 0 0.5rem; /* Adjust spacing */
+    }
+    nav ul li::before { display: none; } /* Hide underline on mobile */
+
+    .hero {
+        min-height: auto; /* Adjust height */
+        padding: 4rem 1rem;
+    }
+
+    .terminal-window { max-width: 95%; }
+
+    .services-grid, .payment-options, .portfolio-grid {
+        grid-template-columns: 1fr; /* Single column */
+        gap: 1.5rem;
+    }
+
+    section { padding: 3rem 1rem; } /* Reduce padding */
+
+    .portfolio-overlay {
+        background: linear-gradient(to top, rgba(10, 25, 47, 0.98) 30%, rgba(10, 25, 47, 0.7) 70%, transparent);
+        opacity: 1; /* Always visible on mobile */
+        position: static; /* Remove absolute positioning */
+        transform: none; /* Reset transforms */
+        padding: 1rem;
+    }
+     .portfolio-overlay h3, .portfolio-overlay p, .portfolio-links, .tech-stack {
+        transform: none; /* Reset transforms */
+        opacity: 1;
+        transition: none; /* Remove transitions */
+    }
+     .portfolio-links .btn { margin: 0.3rem;}
+
+    .contact-container { padding: 1.5rem; }
+
+    #ai-assistant .chatbot-container {
+        height: 450px; /* Shorter height */
+        max-width: 100%; /* Full width */
+        border-radius: 8px;
+    }
+     #ai-assistant { padding: 2rem 0.5rem; } /* Less padding */
+
+    .pi-watermark, .company-logo { display: none; } /* Hide watermarks on small screens */
+
+    /* Make background animation less demanding */
+    .stars { animation-duration: 350s; }
+    .galaxy { animation-duration: 200s; }
+    .spacecraft, .satellite, .rocket, .ufo { animation-duration: initial; /* Or adjust individually */ } /* Optional: slow down objects too */
 }
