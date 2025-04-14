@@ -1,170 +1,260 @@
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
+document.addEventListener('DOMContentLoaded', () => {
 
-// Contact Form Handling
-document.getElementById('contactForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const formStatus = document.getElementById('formStatus');
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const subject = form.querySelector('#subject').value;
-    
-    try {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: {
-                'Accept': 'application/json'
+    // --- Smooth Scrolling (Using CSS scroll-behavior, JS fallback or for offsets if needed) ---
+    // Basic smooth scroll already handled by CSS html { scroll-behavior: smooth; }
+    // Keep JS for potential future needs like offset calculations if header height changes dynamically
+    /*
+    const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
+    smoothScrollLinks.forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // Calculate offset if header is fixed and opaque
+                // const headerOffset = document.querySelector('header')?.offsetHeight || 70;
+                // const elementPosition = targetElement.getBoundingClientRect().top;
+                // const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                // window.scrollTo({
+                //      top: offsetPosition,
+                //      behavior: "smooth"
+                // });
+
+                // Simpler version without offset:
+                 targetElement.scrollIntoView({
+                     behavior: 'smooth',
+                     block: 'start' // Aligns target to the top
+                 });
             }
         });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-            // Create custom thank you message
-            const thankYouMessage = `
+    });
+    */
+
+    // --- Contact Form Handling ---
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleFormSubmit);
+    }
+
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formStatus = document.getElementById('formStatus');
+        const contactContainer = form.closest('.contact-container');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const subjectInput = form.querySelector('#subject');
+        const subject = subjectInput ? subjectInput.value : 'your inquiry';
+
+        if (!formStatus || !contactContainer || !submitBtn) {
+            console.error("Contact form elements not found.");
+            return;
+        }
+
+        formStatus.style.display = 'none';
+        formStatus.textContent = '';
+        formStatus.className = 'form-status';
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            const contentType = response.headers.get("content-type");
+            let data;
+
+            if (response.ok) { // Primarily check the HTTP status code
+                 if (contentType && contentType.indexOf("application/json") !== -1) {
+                     data = await response.json();
+                 } else {
+                     // Treat OK non-JSON response as success (e.g., simple redirect page from Formspree)
+                     data = { ok: true }; // Assume Formspree 'ok' field would be true
+                     console.log("Received non-JSON OK response, assuming success.");
+                 }
+            } else {
+                // If response is not OK, try to parse error from JSON, or use status text
+                let errorMessage = `Submission failed: ${response.status} ${response.statusText}`;
+                 if (contentType && contentType.indexOf("application/json") !== -1) {
+                     try {
+                         data = await response.json();
+                         errorMessage = data.error || errorMessage; // Use Formspree error if available
+                     } catch (jsonError) {
+                        console.error("Could not parse error JSON:", jsonError);
+                     }
+                 }
+                 throw new Error(errorMessage);
+            }
+
+            // Process successful submission (based on data.ok or implicit ok)
+            const thankYouMessageHTML = `
                 <div class="thank-you-message">
-                    <h3>Thank you for reaching out!</h3>
-                    <p>I have received your message regarding "${subject}".</p>
-                    <p>I will review your inquiry and get back to you as soon as possible.</p>
+                    <h3><i class="fas fa-check-circle"></i> Thank you for reaching out!</h3>
+                    <p>I have received your message regarding "<strong>${escapeHTML(subject)}</strong>".</p>
+                    <p>I'll review your inquiry and get back to you as soon as possible (usually within 24-48 hours).</p>
                     <p>Best regards,<br>
-                    Extropian Januz<br>
-                    Blockchain & Web Development</p>
+                    Extropian Janus<br>
+                    Blockchain, Web & AI Development</p>
                 </div>
             `;
-            
-            // Replace form with thank you message
-            const contactContainer = document.querySelector('.contact-container');
-            contactContainer.innerHTML = thankYouMessage;
-            
-            // Scroll to message
-            contactContainer.scrollIntoView({ behavior: 'smooth' });
-            
-            // Reset form (though it's hidden now)
-            form.reset();
-            
-            // Restore form after 10 seconds
+
+            contactContainer.innerHTML = thankYouMessageHTML;
+            contactContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Form restored manually by user refreshing or navigating away
+            // Optional: Add a "Send another message" button dynamically if needed
+
+        } catch (error) {
+            console.error("Form submission error:", error);
+            formStatus.className = 'form-status error';
+            formStatus.textContent = `${error.message}`;
+            formStatus.style.display = 'block';
+
+            // Re-enable button only on error
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+
+            // Hide status message after a delay
             setTimeout(() => {
-                contactContainer.innerHTML = form.outerHTML;
-                // Reattach event listener to new form
-                document.getElementById('contactForm').addEventListener('submit', arguments.callee);
-            }, 10000);
-        } else {
-            throw new Error(data.error || 'Something went wrong!');
-        }
-    } catch (error) {
-        formStatus.className = 'form-status error';
-        formStatus.textContent = error.message;
-        formStatus.style.display = 'block';
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-        formStatus.style.display = 'block';
-        
-        // Hide status message after 5 seconds
-        setTimeout(() => {
-            formStatus.style.display = 'none';
-        }, 5000);
-    }
-});
+                if (formStatus) formStatus.style.display = 'none';
+            }, 7000);
 
-// Navbar scroll effect
-window.addEventListener('scroll', () => {
+        }
+        // No finally block needed as button state is handled within try/catch
+    }
+
+    // Helper function to escape HTML characters
+    function escapeHTML(str) {
+        const div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+    }
+
+
+    // --- Navbar Scroll Effect ---
     const header = document.querySelector('header');
-    if (window.scrollY > 50) {
-        header.style.background = 'rgba(42, 42, 114, 0.95)';
-    } else {
-        header.style.background = 'var(--primary-color)';
+    let lastScrollTop = 0;
+    const scrollThreshold = 50; // Pixels to scroll before effect triggers
+
+    if (header) {
+        window.addEventListener('scroll', () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > scrollThreshold) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            // Optional: Hide header on scroll down, show on scroll up
+            // if (scrollTop > lastScrollTop && scrollTop > header.offsetHeight){
+            //    header.style.top = `-${header.offsetHeight}px`; // Hide
+            // } else {
+            //    header.style.top = "0"; // Show
+            // }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+        }, { passive: true }); // Use passive listener for performance
     }
-});
 
-// Terminal typing effect
-const terminalText = [
-    "Welcome to Extropian Janus_",
-    "Exploring Digital Frontiers_",
-    "Web Development | Blockchain | Smart Contracts_",
-    "Ready to launch your next project?_"
-];
-
-let textIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-let typingDelay = 100;
-
-function typeTerminal() {
+    // --- Terminal Typing Effect ---
+    const terminalText = [
+        "Initializing Cosmic Development Interface...",
+        "Loading Web3 Modules...",
+        "Compiling Smart Contracts...",
+        "Training AI Agents...",
+        "Establishing Pi Network Connection...",
+        "Extropian Janus | Blockchain_ Web_ AI_",
+        "Ready for Input >>"
+    ];
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingSpeed = 80;
+    const deletingSpeed = 40;
+    const pauseEnd = 1800;
+    const pauseStart = 150;
     const typedTextSpan = document.querySelector(".typed-text");
-    if (!typedTextSpan) return;
+    const cursorSpan = document.querySelector(".cursor");
 
-    const currentText = terminalText[textIndex];
-    
-    if (isDeleting) {
-        typedTextSpan.textContent = currentText.substring(0, charIndex - 1);
-        charIndex--;
-    } else {
-        typedTextSpan.textContent = currentText.substring(0, charIndex + 1);
-        charIndex++;
-    }
+    function typeTerminal() {
+        if (!typedTextSpan || !cursorSpan) return;
 
-    if (!isDeleting && charIndex === currentText.length) {
-        isDeleting = true;
-        typingDelay = 2000; // Pause at end
-    } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        textIndex = (textIndex + 1) % terminalText.length;
-        typingDelay = 200;
-    }
+        const currentText = terminalText[textIndex];
+        let typeDelay = typingSpeed;
 
-    setTimeout(typeTerminal, isDeleting ? 50 : typingDelay);
-}
+        // Hide cursor while deleting/pausing for better effect
+        cursorSpan.style.display = 'inline-block';
 
-// Start terminal effect when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(typeTerminal, 1000);
-});
-
-// Add space particle effect
-document.addEventListener('mousemove', (e) => {
-    const cursor = document.createElement('div');
-    cursor.className = 'cursor-trail';
-    cursor.style.left = e.pageX + 'px';
-    cursor.style.top = e.pageY + 'px';
-    document.body.appendChild(cursor);
-
-    setTimeout(() => {
-        cursor.remove();
-    }, 1000);
-});
-
-// Enhanced scroll animations
-const observerOptions = {
-    threshold: 0.2,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0) scale(1)';
-            entry.target.style.filter = 'blur(0)';
+        if (isDeleting) {
+            typedTextSpan.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+            typeDelay = deletingSpeed;
+        } else {
+            typedTextSpan.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
         }
-    });
-}, observerOptions);
 
-document.querySelectorAll('.service-card, .payment-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(20px) scale(0.95)';
-    card.style.filter = 'blur(5px)';
-    card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-    observer.observe(card);
-});
+        if (!isDeleting && charIndex === currentText.length) {
+            isDeleting = true;
+            typeDelay = pauseEnd;
+            cursorSpan.style.display = 'inline-block'; // Ensure cursor shows at end
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % terminalText.length;
+            typeDelay = pauseStart;
+            cursorSpan.style.display = 'none'; // Hide cursor briefly before typing next
+        }
+
+        setTimeout(typeTerminal, typeDelay);
+    }
+
+    if (typedTextSpan) {
+        setTimeout(typeTerminal, 1200); // Initial delay before starting
+    }
+
+    // --- Cursor Trail Effect (Removed as it can be distracting/performant issue) ---
+    /*
+    let trailActive = false; // Disabled by default
+    if (trailActive) {
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.createElement('div');
+            cursor.className = 'cursor-trail'; // Ensure this class exists in CSS
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            document.body.appendChild(cursor);
+            setTimeout(() => { cursor.remove(); }, 1000);
+        });
+    }
+    */
+
+    // --- Scroll Animations (Intersection Observer) ---
+    const observerOptions = {
+        threshold: 0.1, // Trigger when 10% visible
+        rootMargin: '0px 0px -50px 0px' // Start animation slightly before fully in view
+    };
+
+    const fadeUpObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target); // Stop observing once visible
+            }
+        });
+    }, observerOptions);
+
+    const elementsToAnimate = document.querySelectorAll('.service-card, .payment-card, .portfolio-card, .contact-container');
+
+    if (elementsToAnimate.length > 0) {
+        elementsToAnimate.forEach(el => {
+             el.classList.add('fade-up-hidden'); // Add initial state class
+             fadeUpObserver.observe(el);
+        });
+    }
+
+}); // End DOMContentLoaded
