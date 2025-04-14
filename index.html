@@ -4,27 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="kaEEE2cUvJiGMD26fVtIIasQvfL9FbP_EzVgIXLt8CI" />
-    <meta name="description" content="Extropian Janus - Professional Blockchain & Web Developer specializing in Pi Network, DApps, and modern web solutions">
-    <meta name="keywords" content="blockchain development, web development, Pi Network, smart contracts, DApps, cryptocurrency, web design">
+    <!-- Updated Meta Description -->
+    <meta name="description" content="Extropian Janus - Professional Blockchain, Web & AI Developer specializing in Pi Network, DApps, AI Agents, and modern web solutions">
+    <!-- Updated Meta Keywords -->
+    <meta name="keywords" content="blockchain development, web development, Pi Network, smart contracts, DApps, cryptocurrency, web design, AI agent development, LLM integration, chatbot development, RAG">
     <meta name="author" content="Extropian Janus">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="Extropian Janus - Cosmic Code Developer">
-    <meta property="og:description" content="Professional Blockchain & Web Developer specializing in Pi Network, DApps, and modern web solutions">
+    <!-- Updated OG Description -->
+    <meta property="og:description" content="Professional Blockchain, Web & AI Developer specializing in Pi Network, DApps, AI Agents, and modern web solutions">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://extropian22.github.io/extropian22-github.io/">
     <title>Extropian Janus - Cosmic Code Developer</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="canonical" href="https://extropian22.github.io/extropian22-github.io/">
+    <!-- Updated JSON-LD Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Extropian Janus",
       "url": "https://extropian22.github.io/extropian22-github.io/",
-      "jobTitle": "Blockchain & Web Developer",
-      "description": "Professional Blockchain & Web Developer specializing in Pi Network, DApps, and modern web solutions",
-      "knowsAbout": ["Blockchain Development", "Web Development", "Pi Network", "Smart Contracts", "DApps", "Cryptocurrency"],
+      "jobTitle": "Blockchain, Web & AI Developer", // Optional: Update Job Title
+      "description": "Professional Blockchain, Web & AI Developer specializing in Pi Network, DApps, AI Agents, and modern web solutions", // Updated Description
+      "knowsAbout": ["Blockchain Development", "Web Development", "Pi Network", "Smart Contracts", "DApps", "Cryptocurrency", "AI Agent Development", "LLM Integration"], // Added AI skills
       "makesOffer": {
         "@type": "Offer",
         "itemOffered": [
@@ -37,6 +41,12 @@
             "@type": "Service",
             "name": "Blockchain Development",
             "description": "Smart Contract Development, Decentralized Application (DApp) Development, Blockchain Integration"
+          },
+          // Added AI Agent Building Service
+          {
+            "@type": "Service",
+            "name": "AI Agent Building",
+            "description": "Development of custom AI agents, chatbots, and automation solutions using Large Language Models (LLMs)."
           }
         ]
       }
@@ -49,7 +59,7 @@
     <div class="twinkling"></div>
     <img src="images/pi-network.svg" class="pi-watermark top" alt="Pay with Pi" loading="lazy">
     <img src="images/extropian-logo.svg" class="company-logo" alt="Extropian Januz Blockchain" loading="lazy">
-    
+
     <header>
         <nav aria-label="Main navigation">
             <div class="logo" role="banner"><i class="fas fa-rocket" aria-hidden="true"></i> Extropian Janus</div>
@@ -112,6 +122,22 @@
                         </ul>
                     </div>
                 </div>
+                <!-- === NEW AI AGENT BUILDING CARD ADDED HERE === -->
+                <div class="service-card">
+                    <i class="fas fa-robot"></i> <!-- Or fas fa-brain, fas fa-cogs -->
+                    <h3>AI Agent Building</h3>
+                    <div class="service-details">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Custom AI Agent Design & Development</li>
+                            <li><i class="fas fa-check"></i> Integration with LLMs (e.g., GPT, Claude)</li>
+                            <li><i class="fas fa-check"></i> Agent Task Automation</li>
+                            <li><i class="fas fa-check"></i> AI Chatbot Development</li>
+                            <li><i class="fas fa-check"></i> RAG (Retrieval-Augmented Generation) Systems</li>
+                            <li><i class="fas fa-check"></i> AI Agent Deployment & Maintenance</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- === END OF NEW CARD === -->
             </div>
         </section>
 
@@ -253,10 +279,11 @@ Blockchain & Web Development">
 
         <script>
             const contextResponses = {
-                "What is Extropian Janus?": "Extropian Janus is a professional blockchain and web developer specializing in Pi Network, DApps, and modern web solutions.",
-                "What services do you offer?": "I offer web development, blockchain development, smart contract development, and custom web application development.",
+                "What is Extropian Janus?": "Extropian Janus is a professional blockchain, web and AI developer specializing in Pi Network, DApps, AI agents, and modern web solutions.", // Updated context response
+                "What services do you offer?": "I offer web development, blockchain development, AI agent building, smart contract development, and custom web application development.", // Updated context response
                 "How can I contact you?": "You can contact me through the contact form on my portfolio website.",
-                "Tell me about your projects.": "I have worked on various projects related to blockchain technology and web development, including DApps and e-commerce platforms."
+                "Tell me about your projects.": "I have worked on various projects related to blockchain technology, web development, and AI including DApps and e-commerce platforms.", // Updated context response
+                "What is AI Agent Building?": "AI Agent Building involves designing and developing custom AI agents, often leveraging Large Language Models (LLMs), to perform tasks, automate processes, or act as intelligent chatbots." // Added context response
             };
 
             async function getAIResponse() {
@@ -266,29 +293,62 @@ Blockchain & Web Development">
                 responseArea.innerHTML = '';
                 spinner.style.display = 'block';
 
-                // Check for context-based responses
-                if (contextResponses[query]) {
-                    responseArea.innerHTML = contextResponses[query];
+                // Check for context-based responses (case-sensitive, consider making it case-insensitive if needed)
+                let foundResponse = contextResponses[query];
+                if (!foundResponse) {
+                    // Simple case-insensitive check
+                    const lowerQuery = query.toLowerCase();
+                     for (const key in contextResponses) {
+                         if (key.toLowerCase() === lowerQuery) {
+                             foundResponse = contextResponses[key];
+                             break;
+                         }
+                     }
+                }
+
+
+                if (foundResponse) {
+                    responseArea.innerHTML = foundResponse;
                     responseArea.classList.add('fade-in', 'slide-in');
                     spinner.style.display = 'none';
                     return;
                 }
 
+                // --- Placeholder for Actual AI API Call ---
+                // Since the API endpoint and key are examples, this part won't actually work.
+                // It will likely fall into the catch block.
+                // Replace 'https://api.example.com/ai' and the Authorization key
+                // with your actual backend/API details when ready.
                 try {
-                    const response = await fetch('https://api.example.com/ai', { // Replace with actual API endpoint
+                    // Simulating a delay for demonstration if no API is connected
+                     await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
+
+                    // Example API call structure (replace with your actual implementation)
+                    /*
+                    const response = await fetch('YOUR_ACTUAL_AI_API_ENDPOINT', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': 'Bearer AIzaSyARfNGV3HPtA9PhgRSNRmUPohDugWAWJkU'
+                            'Authorization': 'Bearer YOUR_ACTUAL_API_KEY' // Or other auth method
                         },
-                        body: JSON.stringify({ query })
+                        body: JSON.stringify({ query: query }) // Send the user's query
                     });
 
+                    if (!response.ok) {
+                         throw new Error(`API Error: ${response.statusText}`);
+                    }
+
                     const data = await response.json();
-                    responseArea.innerHTML = data.answer || 'No response from AI.';
+                    responseArea.innerHTML = data.answer || 'Sorry, I could not find an answer to that.'; // Adjust based on your API response structure
+                    */
+
+                    // Placeholder response if API call structure above is commented out/not implemented
+                     responseArea.innerHTML = "Sorry, the AI assistant is currently unavailable or couldn't process that specific query.";
                     responseArea.classList.add('fade-in', 'slide-in');
+
                 } catch (error) {
-                    responseArea.innerHTML = 'Error: ' + error.message;
+                    console.error("AI Assistant Error:", error); // Log error for debugging
+                    responseArea.innerHTML = 'Error connecting to the AI assistant. Please try again later.';
                     responseArea.classList.add('fade-in', 'slide-in');
                 } finally {
                     spinner.style.display = 'none';
@@ -298,6 +358,8 @@ Blockchain & Web Development">
             function clearInput() {
                 document.getElementById('query').value = '';
                 document.getElementById('response').innerHTML = '';
+                // Optionally remove animation classes if you want animations on re-display
+                document.getElementById('response').classList.remove('fade-in', 'slide-in');
             }
         </script>
     </main>
@@ -325,19 +387,123 @@ Blockchain & Web Development">
     <div class="ufo"></div>
 
     <footer>
-        <p>&copy; 2024 Extropian Janus. All rights reserved.</p>
+        <p>© 2024 Extropian Janus. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
     <script>
-const starsContainer = document.querySelector('.stars');
-for (let i = 0; i < 100; i++) {
-    const star = document.createElement('div');
-    star.classList.add('star');
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    starsContainer.appendChild(star);
-}
-</script>
+        // Keep the star generation script
+        const starsContainer = document.querySelector('.stars');
+        if (starsContainer) { // Check if container exists
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                // Add random animation delay for twinkling effect if desired in CSS
+                star.style.animationDelay = Math.random() * 5 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // --- AI Assistant Functionality - Moved inside the main script tag above ---
+
+        // --- Contact Form Submission Handling (Example using fetch) ---
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('formStatus');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const formData = new FormData(contactForm);
+                formStatus.innerHTML = '<p>Sending...</p>';
+                formStatus.style.display = 'block'; // Show status
+
+                fetch(contactForm.action, {
+                    method: contactForm.method,
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        formStatus.innerHTML = '<p>Thanks! Your message has been sent successfully.</p>';
+                        contactForm.reset(); // Clear the form
+                    } else {
+                        response.json().then(data => {
+                            if (Object.hasOwn(data, 'errors')) {
+                                formStatus.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                            } else {
+                                formStatus.innerHTML = '<p>Oops! There was a problem submitting your form. Please try again later.</p>';
+                            }
+                        })
+                    }
+                }).catch(error => {
+                    console.error("Form submission error:", error);
+                    formStatus.innerHTML = '<p>Oops! There was a network error submitting your form. Please check your connection.</p>';
+                }).finally(() => {
+                    // Optional: Hide status message after a few seconds
+                    // setTimeout(() => { formStatus.style.display = 'none'; formStatus.innerHTML = ''; }, 5000);
+                });
+            });
+        }
+
+        // --- Typed Text Effect (Example - Assuming you have this in script.js or add here) ---
+        const typedTextSpan = document.querySelector(".typed-text");
+        const cursorSpan = document.querySelector(".cursor");
+        const terminalContent = document.querySelector(".terminal-content");
+
+        const textArray = [
+            "Initializing Cosmic Code Solutions...",
+            "Loading Blockchain Modules...",
+            "Compiling Web Components...",
+            "Integrating AI Agents...",
+            "Ready." ,
+            "Extropian Janus: Building the Future, One Block at a Time."
+            ];
+        const typingDelay = 100;
+        const erasingDelay = 50;
+        const newTextDelay = 2000; // Delay between current and next text
+        let textArrayIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+          if (charIndex < textArray[textArrayIndex].length) {
+            if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, typingDelay);
+          }
+          else {
+            cursorSpan.classList.remove("typing");
+            setTimeout(erase, newTextDelay);
+          }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+            if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+            charIndex--;
+            setTimeout(erase, erasingDelay);
+          }
+          else {
+            cursorSpan.classList.remove("typing");
+            textArrayIndex++;
+            if(textArrayIndex>=textArray.length) textArrayIndex=0;
+            setTimeout(type, typingDelay + 1100);
+          }
+        }
+
+        // Start the effect if the element exists
+        if (typedTextSpan && cursorSpan) {
+             document.addEventListener("DOMContentLoaded", function() { // Ensure DOM is loaded
+                if(textArray.length) setTimeout(type, newTextDelay + 250);
+             });
+        }
+
+
+    </script>
 </body>
 </html>
