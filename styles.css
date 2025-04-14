@@ -1,260 +1,795 @@
-document.addEventListener('DOMContentLoaded', () => {
+/* ==== Variables ==== */
+:root {
+    --primary-color: #0a192f;  /* Deep Navy Blue */
+    --secondary-color: #64ffda; /* Bright Teal/Aqua */
+    --text-color: #8892b0;     /* Light Slate Grey */
+    --light-text: #ccd6f6;      /* Lighter Slate for emphasis */
+    --light-bg: #112240;      /* Slightly Lighter Navy */
+    --dark-bg: #020c1b;       /* Very Dark Blue/Black */
+    --neon-glow: 0 0 5px var(--secondary-color), 0 0 10px var(--secondary-color); /* Subtle glow */
+    --hover-glow: 0 0 8px var(--secondary-color), 0 0 15px var(--secondary-color); /* Stronger hover glow */
+    --card-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+    --header-height: 70px; /* Define header height as variable */
+}
 
-    // --- Smooth Scrolling (Using CSS scroll-behavior, JS fallback or for offsets if needed) ---
-    // Basic smooth scroll already handled by CSS html { scroll-behavior: smooth; }
-    // Keep JS for potential future needs like offset calculations if header height changes dynamically
-    /*
-    const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
-    smoothScrollLinks.forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                // Calculate offset if header is fixed and opaque
-                // const headerOffset = document.querySelector('header')?.offsetHeight || 70;
-                // const elementPosition = targetElement.getBoundingClientRect().top;
-                // const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+/* ==== Global Reset & Base Styles ==== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-                // window.scrollTo({
-                //      top: offsetPosition,
-                //      behavior: "smooth"
-                // });
+html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: var(--text-color) var(--primary-color); /* For Firefox */
+}
 
-                // Simpler version without offset:
-                 targetElement.scrollIntoView({
-                     behavior: 'smooth',
-                     block: 'start' // Aligns target to the top
-                 });
-            }
-        });
-    });
-    */
+/* For Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--primary-color);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--text-color);
+  border-radius: 10px;
+  border: 2px solid var(--primary-color);
+}
 
-    // --- Contact Form Handling ---
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleFormSubmit);
+
+body {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Roboto Mono', monospace;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    background-image: linear-gradient(rgba(10, 25, 47, 0.95), rgba(10, 25, 47, 0.95));
+    overflow-x: hidden;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased; /* Smoother fonts */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==== Background Effects ==== */
+.stars, .twinkling {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.stars {
+    background-image: radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)),
+                      radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+                      radial-gradient(1px 1px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                      radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                      radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+                      radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    opacity: 0.5; /* Slightly reduced star opacity */
+    z-index: -3;
+}
+
+.twinkling {
+    /* Using a very subtle noise pattern for twinkling */
+    background: linear-gradient(45deg, rgba(255,255,255,0.01) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.01) 75%, rgba(255,255,255,0.01)),
+                linear-gradient(-45deg, rgba(255,255,255,0.01) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.01) 75%, rgba(255,255,255,0.01));
+    background-size: 5px 5px; /* Smaller size for finer grain */
+    animation: twinkle 10s linear infinite alternate; /* Slower, smoother twinkle */
+    opacity: 0.8; /* Control intensity */
+    z-index: -2;
+}
+
+@keyframes twinkle {
+  from { background-position: 0 0; }
+  to { background-position: 100px 100px; } /* Adjust position change */
+}
+
+
+/* ==== Header and Navigation ==== */
+header {
+    background: rgba(10, 25, 47, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 0 2rem;
+    height: var(--header-height);
+    transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out, height 0.3s ease-in-out; /* Added height transition */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1300px;
+    margin: 0 auto;
+    height: 100%; /* Make nav fill header height */
+}
+
+.logo a { /* Style the link within the logo */
+    color: var(--secondary-color);
+    text-shadow: var(--neon-glow);
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: bold;
+    text-decoration: none; /* Remove underline from logo link */
+    transition: color 0.3s ease;
+}
+
+.logo a:hover {
+    color: var(--light-text); /* Slight change on hover */
+}
+
+.logo i {
+    font-size: 1.4rem;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 0.2rem;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+nav ul li a::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 50%; /* Start underline from center */
+    transform: translateX(-50%);
+    background-color: var(--secondary-color);
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+    color: var(--secondary-color);
+    outline: none;
+}
+
+nav ul li a:hover::before,
+nav ul li a:focus::before {
+    visibility: visible;
+    width: 100%;
+}
+
+/* Scrolled Header Style */
+header.scrolled {
+    background: rgba(17, 34, 64, 0.9); /* Updated background */
+    box-shadow: 0 5px 15px rgba(2, 12, 27, 0.5);
+    height: calc(var(--header-height) - 10px); /* Slightly reduce height on scroll */
+}
+
+/* ==== Main Content Area ==== */
+main {
+    margin-top: var(--header-height);
+    padding: 0 2rem;
+}
+
+section {
+    padding: 5rem 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative; /* For potential pseudo-elements or positioning inside */
+}
+
+/* ==== Headings ==== */
+h1, h2, h3 {
+    color: var(--light-text);
+    margin-bottom: 1rem;
+    font-weight: 600;
+    line-height: 1.3; /* Adjust line height */
+}
+
+h1 {
+    font-size: clamp(2.5rem, 5vw, 3.8rem); /* Slightly larger max */
+}
+
+h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    text-align: center;
+    margin-bottom: 3.5rem; /* Increased margin */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem; /* Increased gap */
+    color: var(--secondary-color);
+    text-shadow: var(--neon-glow);
+}
+
+h2 i {
+    font-size: clamp(1.6rem, 3.5vw, 2.1rem); /* Adjusted icon size */
+}
+
+h3 {
+    font-size: 1.4rem;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem; /* Added margin below H3 */
+}
+
+/* ==== Hero Section ==== */
+.hero {
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero h1 {
+    margin-top: 1.5rem;
+    color: var(--light-text);
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    max-width: 600px;
+    margin-top: 0.8rem; /* Increased space */
+}
+
+/* ==== Terminal Window ==== */
+.terminal-window {
+    background: var(--dark-bg);
+    border-radius: 8px;
+    padding: 15px 20px;
+    max-width: 650px;
+    width: 90%;
+    box-shadow: 0 0 30px rgba(100, 255, 218, 0.1); /* Slightly stronger shadow */
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    margin-bottom: 2.5rem; /* Increased space */
+}
+
+.terminal-header {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    height: 12px;
+}
+
+.terminal-button { width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; }
+.terminal-button:nth-child(2) { background: #ffbd2e; }
+.terminal-button:nth-child(3) { background: #27c93f; }
+
+.terminal-content {
+    font-family: inherit;
+    color: var(--secondary-color);
+    min-height: 1.6em;
+    line-height: 1.5; /* Slightly increased line height */
+    font-size: 1rem;
+    white-space: pre-wrap;
+}
+
+.cursor {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    width: 10px;
+    height: 1.2em;
+    margin-left: 3px;
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { background-color: transparent; }
+    50% { background-color: var(--secondary-color); }
+}
+
+/* ==== Services Section ==== */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.service-card {
+    background: var(--light-bg);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease-in-out;
+    padding: 2rem 1.5rem;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    min-height: 350px;
+}
+
+/* Add :focus-within for keyboard navigation */
+.service-card:hover,
+.service-card:focus-within {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px -15px rgba(2, 12, 27, 0.9);
+    border-color: var(--secondary-color);
+}
+
+.service-card > i.fas {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+    align-self: flex-start;
+}
+
+.service-card:hover > i.fas,
+.service-card:focus-within > i.fas {
+    transform: scale(1.1);
+}
+
+.service-card h3 {
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.service-details {
+    margin-top: 1rem;
+    flex-grow: 1;
+}
+
+.service-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.service-details li {
+    color: var(--text-color);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    position: relative;
+    padding-left: 1.8rem;
+    transition: color 0.3s ease; /* Add transition for text color */
+}
+
+.service-card:hover .service-details li {
+    color: var(--light-text); /* Lighten text on card hover */
+}
+
+.service-details li i.fas.fa-check {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    position: absolute;
+    left: 0;
+    top: 0.3em;
+}
+
+/* ==== Portfolio Section ==== */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.portfolio-card {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--light-bg);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--card-shadow);
+}
+
+.portfolio-card:hover,
+.portfolio-card:focus-within {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px -15px rgba(2, 12, 27, 0.9);
+    border-color: var(--secondary-color);
+}
+
+.portfolio-image {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+    background-color: var(--dark-bg);
+}
+
+.portfolio-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    filter: grayscale(40%) contrast(110%) brightness(0.9); /* Adjusted initial filter */
+}
+
+.portfolio-card:hover .portfolio-image img,
+.portfolio-card:focus-within .portfolio-image img {
+    transform: scale(1.05);
+    filter: grayscale(0%) contrast(100%) brightness(1);
+}
+
+.portfolio-overlay {
+    padding: 1.5rem;
+    background: var(--light-bg);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.portfolio-overlay h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.portfolio-overlay p {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+}
+
+.portfolio-links {
+    margin-bottom: 1rem;
+}
+
+.portfolio-links .btn {
+    background: transparent;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+}
+
+.portfolio-links .btn:hover,
+.portfolio-links .btn:focus {
+    background: rgba(100, 255, 218, 0.1);
+    box-shadow: inset 0 0 8px rgba(100, 255, 218, 0.2), 0 0 10px rgba(100, 255, 218, 0.1); /* Added subtle outer glow */
+    outline: none;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tech-stack span {
+    background: rgba(100, 255, 218, 0.1);
+    color: var(--secondary-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(100, 255, 218, 0.3);
+}
+
+/* ==== Payment Section ==== */
+.payment-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.payment-card {
+    background: var(--light-bg);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease-in-out;
+    padding: 2rem 1.5rem;
+    border-radius: 6px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-card:hover,
+.payment-card:focus-within {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px -15px rgba(2, 12, 27, 0.9);
+    border-color: var(--secondary-color);
+}
+
+.payment-card i {
+    font-size: 2.8rem;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.payment-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.payment-card p {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+/* ==== Contact Form Styles ==== */
+.contact-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2.5rem; /* Increased padding */
+    background: var(--light-bg);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 6px;
+    box-shadow: var(--card-shadow);
+}
+
+#contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: var(--light-text);
+    margin-bottom: 0.6rem; /* Slightly more space */
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.9rem 1rem; /* Adjusted padding */
+    background: var(--primary-color);
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    border-radius: 4px;
+    color: var(--light-text);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-color);
+    opacity: 0.7; /* Slightly less opaque */
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.3); /* Adjusted focus shadow */
+    border-color: var(--secondary-color);
+    background: var(--light-bg);
+}
+
+.submit-btn {
+    background: transparent;
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    padding: 0.9rem 2.2rem; /* Adjusted padding */
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    align-self: flex-start;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover:not(:disabled),
+.submit-btn:focus:not(:disabled) {
+    background: rgba(100, 255, 218, 0.1);
+    box-shadow: inset 0 0 8px rgba(100, 255, 218, 0.2), 0 0 10px rgba(100, 255, 218, 0.1);
+    outline: none;
+}
+
+.submit-btn:active:not(:disabled) {
+    background: rgba(100, 255, 218, 0.15); /* Slightly darker active state */
+    transform: scale(0.98); /* Add subtle press effect */
+}
+
+.submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: transparent; /* Ensure disabled state doesn't keep hover style */
+    box-shadow: none;
+}
+
+.submit-btn i {
+    transition: transform 0.3s ease;
+}
+.submit-btn:hover:not(:disabled) i {
+    transform: translateX(4px); /* Slightly more movement */
+}
+
+/* Form Status Messages */
+.form-status {
+    margin-top: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 4px;
+    text-align: left;
+    display: none;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    border-left-width: 5px; /* Add accent border */
+    border-left-style: solid;
+}
+
+.form-status.success {
+    display: block;
+    background: rgba(100, 255, 218, 0.05); /* More subtle background */
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.form-status.error {
+    display: block;
+    background: rgba(255, 99, 71, 0.05); /* More subtle background */
+    color: #ff8a80;
+    border-color: #ff8a80;
+}
+
+/* Thank You Message */
+.thank-you-message {
+    padding: 1rem 0;
+    text-align: left;
+    animation: fadeIn 0.5s ease-out;
+}
+.thank-you-message h3 { font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; }
+.thank-you-message h3 i { color: var(--secondary-color); }
+.thank-you-message p { margin-bottom: 0.8rem; color: var(--text-color); line-height: 1.6; font-size: 1rem; }
+.thank-you-message strong { color: var(--light-text); font-weight: 600; /* Make subject bold */ }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==== Watermarks and Logos ==== */
+.pi-watermark {
+    position: fixed;
+    left: 25px;
+    z-index: 10;
+    width: 70px; /* Smaller watermark */
+    height: auto;
+    opacity: 0.2; /* More subtle */
+    transition: opacity 0.3s, transform 0.3s;
+    animation: float 9s ease-in-out infinite alternate; /* Slower float */
+    pointer-events: none;
+}
+.pi-watermark.top { top: calc(var(--header-height) + 30px); } /* Position relative to header */
+.pi-watermark.bottom { bottom: 90px; }
+.pi-watermark img { width: 100%; height: 100%; filter: drop-shadow(0 0 5px rgba(93, 56, 145, 0.2)); }
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(-3deg); }
+    100% { transform: translateY(-12px) rotate(3deg); }
+}
+
+.company-logo {
+    position: fixed;
+    top: calc((var(--header-height) - 40px) / 2); /* Center vertically in header */
+    right: 30px;
+    width: auto; /* Let height control size */
+    height: 40px; /* Control logo size by height */
+    z-index: 110;
+    transition: transform 0.4s ease-in-out, opacity 0.3s ease;
+    opacity: 0.9;
+}
+/* Adjust logo height when header shrinks */
+header.scrolled .company-logo {
+     height: 35px;
+     top: calc((var(--header-height) - 10px - 35px) / 2);
+}
+
+.company-logo:hover { transform: scale(1.05); opacity: 1; }
+
+/* ==== Footer ==== */
+footer {
+    background: var(--dark-bg);
+    border-top: 1px solid rgba(100, 255, 218, 0.1);
+    text-align: center;
+    padding: 1.5rem 2rem;
+    margin-top: 4rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+/* ==== Scroll Animation Classes ==== */
+.fade-up-hidden {
+    opacity: 0;
+    transform: translateY(30px); /* Start further down */
+    filter: blur(4px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out, filter 0.6s ease-out;
+    will-change: opacity, transform, filter; /* Optimize animation */
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+/* ==== Responsive Design ==== */
+@media (max-width: 1024px) {
+    nav ul { gap: 1.5rem; } /* Reduce nav gap */
+    main { padding: 0 1.5rem; }
+    header { padding: 0 1.5rem; }
+}
+
+@media (max-width: 768px) {
+    body { font-size: 15px; }
+    :root { --header-height: 60px; } /* Adjust header height for mobile */
+
+    header { padding: 0 1rem; }
+    nav { /* Mobile nav would typically use a burger menu, but for now stack */
+        flex-direction: column;
+        height: auto; /* Allow height to adjust */
+        padding: 0.5rem 0;
     }
-
-    async function handleFormSubmit(e) {
-        e.preventDefault();
-        const form = e.target;
-        const formStatus = document.getElementById('formStatus');
-        const contactContainer = form.closest('.contact-container');
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const subjectInput = form.querySelector('#subject');
-        const subject = subjectInput ? subjectInput.value : 'your inquiry';
-
-        if (!formStatus || !contactContainer || !submitBtn) {
-            console.error("Contact form elements not found.");
-            return;
-        }
-
-        formStatus.style.display = 'none';
-        formStatus.textContent = '';
-        formStatus.className = 'form-status';
-
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-
-        try {
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
-
-            const contentType = response.headers.get("content-type");
-            let data;
-
-            if (response.ok) { // Primarily check the HTTP status code
-                 if (contentType && contentType.indexOf("application/json") !== -1) {
-                     data = await response.json();
-                 } else {
-                     // Treat OK non-JSON response as success (e.g., simple redirect page from Formspree)
-                     data = { ok: true }; // Assume Formspree 'ok' field would be true
-                     console.log("Received non-JSON OK response, assuming success.");
-                 }
-            } else {
-                // If response is not OK, try to parse error from JSON, or use status text
-                let errorMessage = `Submission failed: ${response.status} ${response.statusText}`;
-                 if (contentType && contentType.indexOf("application/json") !== -1) {
-                     try {
-                         data = await response.json();
-                         errorMessage = data.error || errorMessage; // Use Formspree error if available
-                     } catch (jsonError) {
-                        console.error("Could not parse error JSON:", jsonError);
-                     }
-                 }
-                 throw new Error(errorMessage);
-            }
-
-            // Process successful submission (based on data.ok or implicit ok)
-            const thankYouMessageHTML = `
-                <div class="thank-you-message">
-                    <h3><i class="fas fa-check-circle"></i> Thank you for reaching out!</h3>
-                    <p>I have received your message regarding "<strong>${escapeHTML(subject)}</strong>".</p>
-                    <p>I'll review your inquiry and get back to you as soon as possible (usually within 24-48 hours).</p>
-                    <p>Best regards,<br>
-                    Extropian Janus<br>
-                    Blockchain, Web & AI Development</p>
-                </div>
-            `;
-
-            contactContainer.innerHTML = thankYouMessageHTML;
-            contactContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-            // Form restored manually by user refreshing or navigating away
-            // Optional: Add a "Send another message" button dynamically if needed
-
-        } catch (error) {
-            console.error("Form submission error:", error);
-            formStatus.className = 'form-status error';
-            formStatus.textContent = `${error.message}`;
-            formStatus.style.display = 'block';
-
-            // Re-enable button only on error
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-
-            // Hide status message after a delay
-            setTimeout(() => {
-                if (formStatus) formStatus.style.display = 'none';
-            }, 7000);
-
-        }
-        // No finally block needed as button state is handled within try/catch
+    header.scrolled { /* Keep height consistent when stacked */
+        height: auto;
     }
-
-    // Helper function to escape HTML characters
-    function escapeHTML(str) {
-        const div = document.createElement('div');
-        div.appendChild(document.createTextNode(str));
-        return div.innerHTML;
+    .logo a { margin-bottom: 0.5rem; font-size: 1.4rem; }
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem 1.5rem; /* Row and column gap */
+        padding: 0;
     }
+    nav ul li a { font-size: 0.9rem; padding: 0.3rem; }
+    nav ul li a::before { bottom: 0; height: 1px;} /* Adjust underline */
 
+    main { margin-top: 110px; padding: 0 1rem; } /* Estimate stacked nav height */
+    section { padding: 4rem 0; }
+    .hero { min-height: calc(80vh - 110px); } /* Adjust hero height */
 
-    // --- Navbar Scroll Effect ---
-    const header = document.querySelector('header');
-    let lastScrollTop = 0;
-    const scrollThreshold = 50; // Pixels to scroll before effect triggers
+    h2 { font-size: clamp(1.6rem, 5vw, 2rem); margin-bottom: 2.5rem;}
+    h2 i { font-size: clamp(1.4rem, 4vw, 1.8rem); }
 
-    if (header) {
-        window.addEventListener('scroll', () => {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    .services-grid, .portfolio-grid, .payment-options { grid-template-columns: 1fr; gap: 1.5rem; }
+    .service-card, .portfolio-card, .payment-card { min-height: auto; } /* Remove min-height */
 
-            if (scrollTop > scrollThreshold) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+    .contact-container { padding: 1.5rem; }
+    .submit-btn { align-self: stretch; } /* Full width button */
 
-            // Optional: Hide header on scroll down, show on scroll up
-            // if (scrollTop > lastScrollTop && scrollTop > header.offsetHeight){
-            //    header.style.top = `-${header.offsetHeight}px`; // Hide
-            // } else {
-            //    header.style.top = "0"; // Show
-            // }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
-        }, { passive: true }); // Use passive listener for performance
-    }
+    .company-logo { display: none; } /* Hide logo on small screens */
+    .pi-watermark { display: none; }
+    footer { font-size: 0.85rem; padding: 1rem; }
+}
 
-    // --- Terminal Typing Effect ---
-    const terminalText = [
-        "Initializing Cosmic Development Interface...",
-        "Loading Web3 Modules...",
-        "Compiling Smart Contracts...",
-        "Training AI Agents...",
-        "Establishing Pi Network Connection...",
-        "Extropian Janus | Blockchain_ Web_ AI_",
-        "Ready for Input >>"
-    ];
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    const typingSpeed = 80;
-    const deletingSpeed = 40;
-    const pauseEnd = 1800;
-    const pauseStart = 150;
-    const typedTextSpan = document.querySelector(".typed-text");
-    const cursorSpan = document.querySelector(".cursor");
-
-    function typeTerminal() {
-        if (!typedTextSpan || !cursorSpan) return;
-
-        const currentText = terminalText[textIndex];
-        let typeDelay = typingSpeed;
-
-        // Hide cursor while deleting/pausing for better effect
-        cursorSpan.style.display = 'inline-block';
-
-        if (isDeleting) {
-            typedTextSpan.textContent = currentText.substring(0, charIndex - 1);
-            charIndex--;
-            typeDelay = deletingSpeed;
-        } else {
-            typedTextSpan.textContent = currentText.substring(0, charIndex + 1);
-            charIndex++;
-        }
-
-        if (!isDeleting && charIndex === currentText.length) {
-            isDeleting = true;
-            typeDelay = pauseEnd;
-            cursorSpan.style.display = 'inline-block'; // Ensure cursor shows at end
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            textIndex = (textIndex + 1) % terminalText.length;
-            typeDelay = pauseStart;
-            cursorSpan.style.display = 'none'; // Hide cursor briefly before typing next
-        }
-
-        setTimeout(typeTerminal, typeDelay);
-    }
-
-    if (typedTextSpan) {
-        setTimeout(typeTerminal, 1200); // Initial delay before starting
-    }
-
-    // --- Cursor Trail Effect (Removed as it can be distracting/performant issue) ---
-    /*
-    let trailActive = false; // Disabled by default
-    if (trailActive) {
-        document.addEventListener('mousemove', (e) => {
-            const cursor = document.createElement('div');
-            cursor.className = 'cursor-trail'; // Ensure this class exists in CSS
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            document.body.appendChild(cursor);
-            setTimeout(() => { cursor.remove(); }, 1000);
-        });
-    }
-    */
-
-    // --- Scroll Animations (Intersection Observer) ---
-    const observerOptions = {
-        threshold: 0.1, // Trigger when 10% visible
-        rootMargin: '0px 0px -50px 0px' // Start animation slightly before fully in view
-    };
-
-    const fadeUpObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target); // Stop observing once visible
-            }
-        });
-    }, observerOptions);
-
-    const elementsToAnimate = document.querySelectorAll('.service-card, .payment-card, .portfolio-card, .contact-container');
-
-    if (elementsToAnimate.length > 0) {
-        elementsToAnimate.forEach(el => {
-             el.classList.add('fade-up-hidden'); // Add initial state class
-             fadeUpObserver.observe(el);
-        });
-    }
-
-}); // End DOMContentLoaded
+@media (max-width: 480px) {
+    main { margin-top: 115px; } /* Adjust margin if nav wraps more */
+    h1 { font-size: clamp(2rem, 6vw, 2.5rem); }
+    h2 { margin-bottom: 2rem; }
+    .terminal-window { padding: 10px 15px; }
+    .terminal-content { font-size: 0.9rem; }
+    .contact-container { padding: 1.5rem 1rem; } /* Adjust padding */
+    .form-group input, .form-group textarea { padding: 0.8rem; }
+    .submit-btn { padding: 0.8rem 1.5rem; font-size: 0.95rem;}
+}
