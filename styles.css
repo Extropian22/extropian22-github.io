@@ -21,8 +21,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Stars Animation */
-/* Optimized star animation */
+/* Stars Background (Now Moving) */
 .stars {
     position: fixed;
     top: 0;
@@ -31,27 +30,20 @@ body {
     height: 100%;
     background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABR0RVh0Q3JlYXRpb24gVGltZQAzLzEvMTNoZNRjAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABx0RVh0Q3JlYXRpb24gVGltZQAxMS8yNC8xMyAtIDE6MjP+JH4WAAAACHRFWHRBdXRob3IAcmFkAAAACXRFWHRDb3B5cmlnaHQAcmFkAAAABXRFWHRUaXRsZQBzdGFyc5nLX9kAAAAVdEVYdERlc2NyaXB0aW9uAHN0YXJzIGljb26Z9zpHAAAAEXRFWHRTb2Z0d2FyZQBTbmFwc2hvdF+QF9QAAAA5dEVYdFNvdXJjZQBodHRwOi8vd3d3LnNuYXBzaG90LmNvbS9kb3dubG9hZC9zdGFycy1pY29uLTI1NngxMjhoMmh6cQAAAABJRU5ErkJggg==') repeat top center;
     z-index: -3;
-    will-change: transform;
-    transform: translateZ(0);
+    will-change: background-position; /* Changed from transform to background-position */
+    transform: translateZ(0); /* Keep hardware acceleration hint */
+    /* Add animation for movement */
+    animation: moveStars 200s linear infinite; /* ADDED */
 }
 
-.twinkling {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-    background: linear-gradient(45deg, rgba(0,0,0,0.2) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.2) 75%, rgba(0,0,0,0.2));
-    background-size: 100px 100px;
-    animation: twinkle 200s linear infinite;
-    will-change: transform;
-    transform: translateZ(0);
+/* Define the star movement animation */
+@keyframes moveStars { /* ADDED */
+  from { background-position: 0 0; }
+  to { background-position: -10000px 5000px; } /* Moves diagonally */
 }
 
-@keyframes twinkle {
-    to {transform: translate(-10000px, 5000px);}
-}
+
+/* Removed .twinkling class and @keyframes twinkle */
 
 .terminal-window {
     background: var(--dark-bg);
@@ -192,14 +184,15 @@ h1, h2, h3 {
     box-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
 }
 
-.service-card i {
-    font-size: 3rem;
+/* Styles for the main icon in the service card */
+.service-card > i { /* Use > to target only direct children icons */
+    font-size: 3rem; /* Keep this for the main card icon */
     color: var(--secondary-color);
     margin-bottom: 1rem;
     transition: transform 0.3s;
 }
 
-.service-card:hover i {
+.service-card:hover > i { /* Use > */
     transform: scale(1.2);
 }
 
@@ -220,13 +213,19 @@ h1, h2, h3 {
 
 .service-details ul li {
     position: relative;
-    padding-left: 25px;
+    padding-left: 25px; /* Keep space for the dot */
     margin-bottom: 10px;
     opacity: 0;
     transform: translateX(-20px);
     animation: fadeInSlide 0.5s ease forwards;
+    /* Inherit alignment */
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    transition: transform 0.3s, color 0.3s;
 }
 
+/* Animation delays */
 .service-details ul li:nth-child(1) { animation-delay: 0.1s; }
 .service-details ul li:nth-child(2) { animation-delay: 0.2s; }
 .service-details ul li:nth-child(3) { animation-delay: 0.3s; }
@@ -235,31 +234,43 @@ h1, h2, h3 {
 .service-details ul li:nth-child(6) { animation-delay: 0.6s; }
 .service-details ul li:nth-child(7) { animation-delay: 0.7s; }
 
+/* --- Styling for the list item icon (glowing dot) --- */
 .service-details ul li i {
     position: absolute;
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--secondary-color);
-    transition: transform 0.3s ease;
-}
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
 
-.service-details ul li:hover i {
-    transform: translateY(-50%) scale(1.2);
-}
+    /* Dot Styling */
+    display: inline-block; /* Or block */
+    width: 8px;           /* Size of the dot */
+    height: 8px;          /* Size of the dot */
+    background-color: var(--secondary-color); /* Dot color */
+    border-radius: 50%;   /* Make it round */
 
-.service-details li {
-    color: var(--text-color);
-    margin: 0.8rem 0;
-    display: flex;
-    align-items: center;
-    transition: transform 0.3s, color 0.3s;
-}
+    /* Glow Effect */
+    box-shadow: 0 0 8px var(--secondary-color);
 
-.service-details li:hover {
+    /* Reset potential Font Awesome styles if class is still present */
+    font-size: 0; /* Hide potential icon character */
+    line-height: 0; /* Hide potential icon character */
+    color: transparent; /* Hide potential icon character */
+}
+/* --- End of Glowing Dot Styling --- */
+
+
+.service-details ul li:hover {
     transform: translateX(10px);
     color: var(--secondary-color);
 }
+
+/* Optional: Enhance glow on hover for the dot */
+.service-details ul li:hover i {
+    transform: translateY(-50%) scale(1.2); /* Keep scale effect */
+    box-shadow: 0 0 12px var(--secondary-color); /* Slightly stronger glow */
+}
+
 
 @keyframes fadeInSlide {
     from {
@@ -699,68 +710,45 @@ section {
 }
 
 .galaxy {
-    position: absolute;
+    position: absolute; /* Changed to absolute */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('path/to/galaxy-image.png') no-repeat center center;
+    background: url('path/to/galaxy-image.png') no-repeat center center; /* Make sure this path is correct */
     background-size: cover;
     animation: galaxyRotation 60s linear infinite;
-    z-index: -1;
+    z-index: -2; /* Behind stars */
+    opacity: 0.5; /* Optional: make it subtle */
 }
 
 .planet {
     position: absolute;
     border-radius: 50%;
     background: radial-gradient(circle, #fff, #ccc);
-    animation: float 10s ease-in-out infinite;
+    animation: float 10s ease-in-out infinite; /* Uses the float animation defined earlier */
 }
 
-@keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-    100% { transform: translateY(0); }
-}
+/* Removed starTwinkle keyframes and usage */
 
-/* Cosmic Background Animations */
-@keyframes starTwinkle {
-    0% { opacity: 0.5; }
-    50% { opacity: 1; }
-    100% { opacity: 0.5; }
-}
-
-.stars::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    animation: starTwinkle 1.5s infinite;
+/* Stars styling (no animation needed here now) */
+.stars {
+    /* Existing styles */
+    overflow: hidden; /* Keep this */
+    /* Animation is now defined above */
 }
 
 .star {
     position: absolute;
     background: white;
     border-radius: 50%;
-    animation: starTwinkle 1.5s infinite;
-}
-
-/* Create multiple stars */
-.stars {
-    overflow: hidden;
-}
-
-.stars .star {
+    /* Removed animation: starTwinkle */
     width: 2px;
     height: 2px;
-    opacity: 0.5;
-    animation: starTwinkle 1.5s infinite;
+    opacity: 0.7; /* Static opacity */
 }
 
-/* Constellations */
+/* Constellations (no animation) */
 .constellation {
     position: absolute;
     width: 2px;
@@ -768,7 +756,7 @@ section {
     background: white;
     border-radius: 50%;
     opacity: 0.8;
-    animation: twinkle 2s infinite;
+    /* Removed animation: twinkle */
 }
 
 #aries { left: 10%; top: 20%; }
@@ -784,107 +772,150 @@ section {
 #aquarius { left: 80%; top: 70%; }
 #pisces { left: 70%; top: 80%; }
 
-@keyframes twinkle {
-    0% { opacity: 0.5; }
-    50% { opacity: 1; }
-    100% { opacity: 0.5; }
-}
+/* Removed second @keyframes twinkle */
 
 @media (max-width: 768px) {
     nav {
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     nav ul {
         flex-direction: column;
         text-align: center;
     }
-    
+
     .hero h1 {
         font-size: 2rem;
     }
-    
+
     .service-card {
         min-height: auto;
     }
-    
-    .service-details li {
+
+    /* Adjust padding for dot */
+    .service-details ul li {
         font-size: 0.9rem;
+        padding-left: 20px; /* Slightly less padding */
     }
-    
+
+    .service-details ul li i {
+       width: 6px; /* Smaller dot on mobile */
+       height: 6px;
+       box-shadow: 0 0 6px var(--secondary-color);
+    }
+
+
     .portfolio-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .portfolio-overlay {
         opacity: 1;
         background: rgba(10, 25, 47, 0.85);
     }
-    
+
     .portfolio-overlay h3,
     .portfolio-overlay p {
         transform: translateY(0);
     }
-    
+
     .contact-container {
         padding: 1rem;
     }
-    
+
     .submit-btn {
         width: 100%;
         justify-content: center;
     }
+
+    /* Make background animation less demanding on mobile */
+    .stars {
+        animation-duration: 300s; /* Slower on mobile */
+    }
+    .galaxy {
+        animation-duration: 120s; /* Slower rotation */
+    }
+
 }
 
 .spacecraft {
     position: absolute;
     width: 50px;
     height: 30px;
-    background: red; /* Temporary color */
-    animation: fly 10s linear infinite;
+    /* background: red; */ /* Use image or SVG instead */
+    background: url('images/spacecraft.svg') no-repeat center center; /* Example path */
+    background-size: contain;
+    animation: fly 25s linear infinite 5s; /* Slower, delayed start */
 }
 
 .satellite {
     position: absolute;
-    width: 30px;
-    height: 30px;
-    background: blue; /* Temporary color */
-    animation: orbit 15s linear infinite;
+    width: 40px; /* Adjusted size */
+    height: 40px; /* Adjusted size */
+    /* background: blue; */
+    background: url('images/satellite.svg') no-repeat center center; /* Example path */
+    background-size: contain;
+    animation: orbit 30s linear infinite; /* Slower */
 }
 
 .rocket {
     position: absolute;
-    width: 40px;
-    height: 60px;
-    background: green; /* Temporary color */
-    animation: launch 8s linear infinite;
+    width: 30px; /* Adjusted size */
+    height: 70px; /* Adjusted size */
+    /* background: green; */
+    background: url('images/rocket.svg') no-repeat center center; /* Example path */
+    background-size: contain;
+    animation: launch 15s ease-in infinite 2s; /* Slower, ease-in, delayed start */
 }
 
 .ufo {
     position: absolute;
-    width: 50px;
-    height: 30px;
-    background: yellow; /* Temporary color */
+    width: 60px; /* Adjusted size */
+    height: 35px; /* Adjusted size */
+    /* background: yellow; */
+    background: url('images/ufo.svg') no-repeat center center; /* Example path */
+    background-size: contain;
     animation: hover 12s ease-in-out infinite;
 }
 
 @keyframes fly {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% { transform: translateX(-100px); top: 10%; opacity: 0; } /* Start off screen */
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateX(calc(100vw + 100px)); top: 15%; opacity: 0;} /* End off screen */
 }
 
 @keyframes orbit {
-    0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
-    100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+    from { transform: rotate(0deg) translateX(20vw) rotate(0deg); } /* Adjust orbit radius */
+    to { transform: rotate(360deg) translateX(20vw) rotate(-360deg); }
 }
 
 @keyframes launch {
-    0% { transform: translateY(100%); }
-    100% { transform: translateY(-100%); }
+    0% { transform: translateY(100vh) rotate(-5deg); left: 20%; opacity: 0; } /* Start below screen */
+    10% { opacity: 1; transform: translateY(90vh) rotate(-5deg); }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) rotate(5deg); left: 25%; opacity: 0; } /* End above screen */
 }
 
 @keyframes hover {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+    0% { transform: translateY(0) translateX(0) rotate(0); top: 75%; left: 80%; opacity: 0.7;}
+    25% { transform: translateY(-15px) translateX(10px) rotate(3deg); opacity: 1;}
+    50% { transform: translateY(5px) translateX(-10px) rotate(-3deg); opacity: 0.8;}
+    75% { transform: translateY(-5px) translateX(5px) rotate(1deg); opacity: 1;}
+    100% { transform: translateY(0) translateX(0) rotate(0); top: 75%; left: 80%; opacity: 0.7;}
+}
+
+/* Ensure space elements are behind content but above background */
+.spacecraft, .satellite, .rocket, .ufo {
+ z-index: -1; /* Or adjust as needed relative to stars/galaxy */
+ top: 50%; /* Default position, overridden by keyframes */
+ left: 50%; /* Default position, overridden by keyframes */
+}
+
+/* Adjust Galaxy position and z-index */
+.galaxy {
+    z-index: -2; /* Ensure galaxy is behind stars */
+    position: fixed; /* Keep fixed for full background effect */
+    opacity: 0.4; /* Adjust opacity */
 }
