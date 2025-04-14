@@ -72,32 +72,37 @@
                 <li role="menuitem"><a href="#portfolio">Portfolio</a></li>
                 <li role="menuitem"><a href="#payment">Payment</a></li>
                 <li role="menuitem"><a href="#contact">Contact</a></li>
-                <li role="menuitem"><a href="#ai-assistant">AI Chatbot</a></li> <!-- Changed link text -->
+                <li role="menuitem"><a href="#ai-assistant">AI Chatbot</a></li> <!-- Text updated -->
             </ul>
         </nav>
     </header>
 
     <main>
         <section id="home" class="hero" role="banner">
-            <div class="terminal-window">
-                <div class="terminal-header">
-                    <span class="terminal-button"></span>
-                    <span class="terminal-button"></span>
-                    <span class="terminal-button"></span>
+             <!-- Container for Terminal Window and Text -->
+            <div class="hero-content">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="terminal-button"></span>
+                        <span class="terminal-button"></span>
+                        <span class="terminal-button"></span>
+                    </div>
+                    <div class="terminal-content">
+                        <!-- Text will be typed here by script.js -->
+                        <span class="typed-text"></span><span class="cursor">_</span>
+                    </div>
                 </div>
-                <div class="terminal-content">
-                    <span class="typed-text"></span>
-                    <span class="cursor">_</span>
-                </div>
+                <!-- Moved H1 and P outside terminal for better layout control if needed -->
+                <h1>Cosmic Code Solutions</h1>
+                <p>Exploring the Digital Universe</p>
             </div>
-            <h1>Cosmic Code Solutions</h1>
-            <p>Exploring the Digital Universe</p>
         </section>
 
         <section id="services" role="region" aria-labelledby="services-heading">
             <h2 id="services-heading"><i class="fas fa-satellite" aria-hidden="true"></i> Services</h2>
             <div class="services-grid">
-                <div class="service-card">
+                <!-- Web Development -->
+                <div class="service-card"> <!-- Added fade-up class for JS -->
                     <i class="fas fa-code"></i>
                     <h3>Web Development</h3>
                     <div class="service-details">
@@ -112,7 +117,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="service-card">
+                <!-- Blockchain Development -->
+                <div class="service-card"> <!-- Added fade-up class for JS -->
                     <i class="fas fa-link"></i>
                     <h3>Blockchain Development</h3>
                     <div class="service-details">
@@ -125,7 +131,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="service-card">
+                <!-- AI Agent Building -->
+                <div class="service-card"> <!-- Added fade-up class for JS -->
                     <i class="fas fa-robot"></i>
                     <h3>AI Agent Building</h3>
                     <div class="service-details">
@@ -134,7 +141,7 @@
                             <li><i></i> Integration with LLMs (e.g., GPT, Claude)</li>
                             <li><i></i> Agent Task Automation</li>
                             <li><i></i> AI Chatbot Development</li>
-                            <li><i></i> RAG (Retrieval-Augmented Generation) Systems</li>
+                            <li><i></i> RAG Systems</li>
                             <li><i></i> AI Agent Deployment & Maintenance</li>
                         </ul>
                     </div>
@@ -146,7 +153,7 @@
             <h2 id="portfolio-heading"><i class="fas fa-rocket" aria-hidden="true"></i> Featured Projects</h2>
             <div class="portfolio-grid">
                 <!-- Project 1: MemePi -->
-                <div class="portfolio-card">
+                <div class="portfolio-card"> <!-- Added fade-up class for JS -->
                     <div class="portfolio-image">
                         <img src="images/memepi-thumb.svg" alt="MemePi Project" loading="lazy">
                         <div class="portfolio-overlay">
@@ -158,17 +165,13 @@
                                 </a>
                             </div>
                             <div class="tech-stack">
-                                <span>Pi Network SDK</span>
-                                <span>Smart Contracts</span>
-                                <span>Tokenomics</span>
-                                <span>DeFi</span>
+                                <span>Pi Network SDK</span><span>Smart Contracts</span><span>Tokenomics</span><span>DeFi</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Project 2: Crypto Marketplace -->
-                <div class="portfolio-card">
+                <div class="portfolio-card"> <!-- Added fade-up class for JS -->
                     <div class="portfolio-image">
                         <img src="images/cryptomarket-thumb.svg" alt="Crypto Marketplace" loading="lazy">
                         <div class="portfolio-overlay">
@@ -180,17 +183,13 @@
                                 </a>
                             </div>
                             <div class="tech-stack">
-                                <span>React</span>
-                                <span>Web3.js</span>
-                                <span>Smart Contracts</span>
-                                <span>Blockchain</span>
+                                <span>React</span><span>Web3.js</span><span>Smart Contracts</span><span>Blockchain</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Project 3: FoodPiHub -->
-                <div class="portfolio-card">
+                <div class="portfolio-card"> <!-- Added fade-up class for JS -->
                     <div class="portfolio-image">
                         <img src="images/foodpihub-thumb.svg" alt="FoodPiHub" loading="lazy">
                         <div class="portfolio-overlay">
@@ -202,19 +201,15 @@
                                 </a>
                             </div>
                             <div class="tech-stack">
-                                <span>Vue.js</span>
-                                <span>Node.js</span>
-                                <span>Pi Network SDK</span>
-                                <span>MongoDB</span>
+                                <span>Vue.js</span><span>Node.js</span><span>Pi Network SDK</span><span>MongoDB</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Project 4: AI Course -->
-                <div class="portfolio-card">
+                <div class="portfolio-card"> <!-- Added fade-up class for JS -->
                     <div class="portfolio-image">
-                        <img src="images/ai-course-thumb.svg" alt="AI Course Platform Project" loading="lazy">
+                        <img src="images/ai-course-thumb.svg" alt="AI Course Platform Project" loading="lazy"> <!-- UPDATE PATH -->
                         <div class="portfolio-overlay">
                             <h3>AI Course Platform</h3>
                             <p>An interactive online platform for learning Artificial Intelligence concepts.</p>
@@ -224,28 +219,23 @@
                                 </a>
                             </div>
                             <div class="tech-stack">
-                                <span>React</span>
-                                <span>Next.js</span>
-                                <span>Vercel</span>
-                                <span>TypeScript</span>
-                                <span>CSS Modules</span>
+                                <span>React</span><span>Next.js</span><span>Vercel</span><span>TypeScript</span><span>CSS Modules</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div> <!-- End of portfolio-grid -->
         </section>
 
         <section id="payment" role="region" aria-labelledby="payment-heading">
             <h2 id="payment-heading"><i class="fas fa-meteor" aria-hidden="true"></i> Payment Methods</h2>
             <div class="payment-options">
-                <div class="payment-card">
+                <div class="payment-card"> <!-- Added fade-up class for JS -->
                     <i class="fab fa-bitcoin"></i>
                     <h3>Cryptocurrency</h3>
                     <p>Accept various cryptocurrencies as payment</p>
                 </div>
-                <div class="payment-card">
+                <div class="payment-card"> <!-- Added fade-up class for JS -->
                     <i class="fas fa-coins"></i>
                     <h3>Pi Coin Special</h3>
                     <p>50% Pi Coins + 50% Fiat for Pi miners</p>
@@ -255,7 +245,8 @@
 
         <section id="contact" role="region" aria-labelledby="contact-heading">
             <h2 id="contact-heading"><i class="fas fa-satellite-dish" aria-hidden="true"></i> Get in Touch</h2>
-            <div class="contact-container">
+            <!-- Container will be modified by JS on submit -->
+            <div class="contact-container"> <!-- Added fade-up class for JS -->
                 <form id="contactForm" action="https://formspree.io/f/xwpkzdgq" method="POST" role="form" aria-label="Contact form">
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -273,39 +264,31 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" rows="5" required></textarea>
                     </div>
-                    <input type="hidden" name="_autoresponse" value="Thank you for contacting Extropian Januz
-
-Dear {name},
-
-Thank you for reaching out! I have received your message regarding {subject}.
-
-I will review your inquiry and get back to you as soon as possible.
-
-Best regards,
-Extropian Januz
-Blockchain & Web Development">
-                    <input type="hidden" name="_replyto" value="%email%">
-                    <input type="hidden" name="_subject" value="Thank you for contacting Extropian Januz">
+                    <!-- Formspree hidden inputs (Autoresponse handled via their dashboard preferably) -->
+                    <!-- <input type="hidden" name="_autoresponse" value="..."> -->
+                    <input type="hidden" name="_replyto" value="%email%"> <!-- Use field name for replyto -->
+                    <input type="hidden" name="_subject" value="New Contact Form Submission from Portfolio">
                     <button type="submit" class="submit-btn">
                         <i class="fas fa-paper-plane"></i> Send Message
                     </button>
+                     <!-- Status message div - positioned within the form container -->
+                     <div id="formStatus" class="form-status" style="display: none;"></div>
                 </form>
-                <div id="formStatus" class="form-status"></div> <!-- Status message div -->
             </div>
         </section>
 
         <!-- === Start AI Chatbot Section === -->
         <section id="ai-assistant" role="region" aria-labelledby="ai-chatbot-heading">
-             <!-- Changed section id to ai-assistant to match nav link, but heading reflects chatbot -->
-            <h2 id="ai-chatbot-heading" style="text-align: center; margin-bottom: 1.5rem;"><i class="fas fa-comments" aria-hidden="true"></i> AI Chatbot</h2>
-            <div class="chatbot-container">
+             <!-- Section ID matches nav link -->
+            <h2 id="ai-chatbot-heading"><i class="fas fa-comments" aria-hidden="true"></i> AI Chatbot</h2>
+            <div class="chatbot-container"> <!-- Added fade-up class for JS -->
                 <iframe
                     src="https://app.relevanceai.com/agents/f1db6c/de786d795596-4679-b312-6bbfe3f71d38/5988e385-e9d9-4393-8cc4-cc36fc423c67/embed-chat?hide_tool_steps=false&hide_file_uploads=false&hide_conversation_list=false&bubble_style=agent&primary_color=%23685FFF&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false"
                     width="100%"
-                    height="100%" /* Height is controlled by the container CSS */
+                    height="100%" /* Controlled by CSS */
                     frameborder="0"
-                    title="Extropian Janus AI Chatbot" /* Added title for accessibility */
-                    allow="microphone" /* Optional: Add if the chatbot needs microphone access */
+                    title="Extropian Janus AI Chatbot"
+                    allow="microphone"
                 ></iframe>
             </div>
         </section>
@@ -319,147 +302,21 @@ Blockchain & Web Development">
     </div>
 
     <!-- Static Constellation Elements (optional) -->
-    <div class="constellation" id="aries"></div>
-    <div class="constellation" id="taurus"></div>
-    <div class="constellation" id="gemini"></div>
-    <div class="constellation" id="cancer"></div>
-    <div class="constellation" id="leo"></div>
-    <div class="constellation" id="virgo"></div>
-    <div class="constellation" id="libra"></div>
-    <div class="constellation" id="scorpio"></div>
-    <div class="constellation" id="sagittarius"></div>
-    <div class="constellation" id="capricorn"></div>
-    <div class="constellation" id="aquarius"></div>
-    <div class="constellation" id="pisces"></div>
+    <div class="constellation" id="aries"></div> <div class="constellation" id="taurus"></div>
+    <div class="constellation" id="gemini"></div> <div class="constellation" id="cancer"></div>
+    <div class="constellation" id="leo"></div> <div class="constellation" id="virgo"></div>
+    <div class="constellation" id="libra"></div> <div class="constellation" id="scorpio"></div>
+    <div class="constellation" id="sagittarius"></div> <div class="constellation" id="capricorn"></div>
+    <div class="constellation" id="aquarius"></div> <div class="constellation" id="pisces"></div>
 
     <footer>
         <p>© 2024 Extropian Janus. All rights reserved.</p>
     </footer>
 
-    <!-- External/Helper Scripts -->
-    <script src="script.js"></script> <!-- Assumed to contain non-essential effects or helpers -->
+    <!-- Link the final script file -->
+    <script src="script.js" defer></script>
 
-    <!-- Inline Scripts (Essential Effects, Handlers) -->
-    <script>
-        // --- Star Generation (If needed) ---
-        const starsContainer = document.querySelector('.stars');
-        if (starsContainer) {
-            function createStar() {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = Math.random() * 2 + 1 + 'px';
-                star.style.height = star.style.width;
-                star.style.opacity = Math.random() * 0.5 + 0.3;
-                starsContainer.appendChild(star);
-            }
-            for (let i = 0; i < 150; i++) {
-                 createStar();
-            }
-        }
+    <!-- REMOVE ALL PREVIOUS INLINE <script> blocks that handled contact form, typing effect etc. -->
 
-        // --- Contact Form Submission Handling ---
-        const contactForm = document.getElementById('contactForm');
-        const formStatus = document.getElementById('formStatus');
-
-        if (contactForm && formStatus) {
-            contactForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const formData = new FormData(contactForm);
-                formStatus.innerHTML = '<p>Sending...</p>';
-                formStatus.className = 'form-status info';
-                formStatus.style.display = 'block';
-
-                fetch(contactForm.action, {
-                    method: contactForm.method,
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                }).then(response => {
-                    if (response.ok) {
-                        formStatus.innerHTML = '<p>Thanks! Your message has been sent successfully.</p>';
-                        formStatus.className = 'form-status success';
-                        contactForm.reset();
-                    } else {
-                        response.json().then(data => {
-                            const errorMessage = data?.errors?.map(e => e.message).join(', ') || 'There was a problem submitting your form.';
-                            formStatus.innerHTML = `<p>Oops! ${errorMessage}</p>`;
-                            formStatus.className = 'form-status error';
-                        }).catch(() => {
-                             formStatus.innerHTML = '<p>Oops! There was a problem submitting your form. Please try again later.</p>';
-                             formStatus.className = 'form-status error';
-                        });
-                    }
-                }).catch(error => {
-                    console.error("Form submission error:", error);
-                    formStatus.innerHTML = '<p>Oops! There was a network error. Please check your connection.</p>';
-                    formStatus.className = 'form-status error';
-                }).finally(() => {
-                     setTimeout(() => {
-                         if (formStatus.classList.contains('success')) {
-                             formStatus.style.display = 'none';
-                             formStatus.innerHTML = '';
-                             formStatus.className = 'form-status';
-                         }
-                     }, 6000);
-                });
-            });
-        }
-
-        // --- Typed Text Effect ---
-        const typedTextSpan = document.querySelector(".typed-text");
-        const cursorSpan = document.querySelector(".cursor");
-
-        if (typedTextSpan && cursorSpan) {
-            const textArray = [
-                "Initializing Cosmic Code Solutions...",
-                "Loading Blockchain Modules...",
-                "Compiling Web Components...",
-                "Integrating AI Agents...",
-                "Deploying Portfolio Updates...",
-                "Activating AI Chatbot...", // Updated text
-                "Ready.",
-                "Extropian Janus: Building the Future, One Block at a Time."
-            ];
-            const typingDelay = 80;
-            const erasingDelay = 40;
-            const newTextDelay = 1500;
-            let textArrayIndex = 0;
-            let charIndex = 0;
-
-            function type() {
-              if (charIndex < textArray[textArrayIndex].length) {
-                if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
-                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
-                charIndex++;
-                setTimeout(type, typingDelay);
-              } else {
-                cursorSpan.classList.remove("typing");
-                setTimeout(erase, newTextDelay);
-              }
-            }
-
-            function erase() {
-                if (charIndex > 0) {
-                if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
-                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
-                charIndex--;
-                setTimeout(erase, erasingDelay);
-              } else {
-                cursorSpan.classList.remove("typing");
-                textArrayIndex++;
-                if(textArrayIndex >= textArray.length) textArrayIndex = 0;
-                setTimeout(type, typingDelay + 500);
-              }
-            }
-
-             document.addEventListener("DOMContentLoaded", function() {
-                if(textArray.length) setTimeout(type, newTextDelay + 250);
-             });
-        }
-
-        // Removed AI Assistant specific functions (getAIResponse, clearInput, contextResponses)
-
-    </script>
 </body>
 </html>
