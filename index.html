@@ -13,7 +13,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://extropian22.github.io/extropian22-github.io/">
     <title>Extropian Janus - Cosmic Code Developer</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to the updated styles.css -->
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="canonical" href="https://extropian22.github.io/extropian22-github.io/">
     <script type="application/ld+json">
@@ -28,21 +28,9 @@
       "makesOffer": {
         "@type": "Offer",
         "itemOffered": [
-          {
-            "@type": "Service",
-            "name": "Web Development",
-            "description": "Website Design and Development, E-commerce Platform Development, Custom Web Application Development"
-          },
-          {
-            "@type": "Service",
-            "name": "Blockchain Development",
-            "description": "Smart Contract Development, Decentralized Application (DApp) Development, Blockchain Integration"
-          },
-          {
-            "@type": "Service",
-            "name": "AI Agent Building",
-            "description": "Development of custom AI agents, chatbots, and automation solutions using Large Language Models (LLMs)."
-          }
+          { "@type": "Service", "name": "Web Development", "description": "Website Design and Development, E-commerce Platform Development, Custom Web Application Development" },
+          { "@type": "Service", "name": "Blockchain Development", "description": "Smart Contract Development, Decentralized Application (DApp) Development, Blockchain Integration" },
+          { "@type": "Service", "name": "AI Agent Building", "description": "Development of custom AI agents, chatbots, and automation solutions using Large Language Models (LLMs)." }
         ]
       }
     }
@@ -52,6 +40,17 @@
     <!-- Background Elements -->
     <div class="stars"></div>
     <div class="galaxy"></div>
+
+    <!-- === ADDED: Audio Element === -->
+    <audio id="backgroundAudio" loop muted>
+      <source src="audio/background-music.mp3" type="audio/mpeg"> <!-- MAKE SURE PATH IS CORRECT -->
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- === ADDED: Audio Control Button === -->
+    <button id="audioControlBtn" class="control-button" aria-label="Unmute Background Music" title="Toggle Music">
+        <i class="fas fa-volume-mute"></i> <!-- Start muted -->
+    </button>
 
     <!-- Animated Objects -->
     <div class="spacecraft"></div>
@@ -72,27 +71,22 @@
                 <li role="menuitem"><a href="#portfolio">Portfolio</a></li>
                 <li role="menuitem"><a href="#payment">Payment</a></li>
                 <li role="menuitem"><a href="#contact">Contact</a></li>
-                <li role="menuitem"><a href="#ai-assistant">AI Chatbot</a></li> <!-- Text updated -->
+                <li role="menuitem"><a href="#ai-assistant">AI Chatbot</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section id="home" class="hero" role="banner">
-             <!-- Container for Terminal Window and Text -->
             <div class="hero-content">
                 <div class="terminal-window">
                     <div class="terminal-header">
-                        <span class="terminal-button"></span>
-                        <span class="terminal-button"></span>
-                        <span class="terminal-button"></span>
+                        <span class="terminal-button"></span><span class="terminal-button"></span><span class="terminal-button"></span>
                     </div>
                     <div class="terminal-content">
-                        <!-- Text will be typed here by script.js -->
                         <span class="typed-text"></span><span class="cursor">_</span>
                     </div>
                 </div>
-                <!-- Moved H1 and P outside terminal for better layout control if needed -->
                 <h1>Cosmic Code Solutions</h1>
                 <p>Exploring the Digital Universe</p>
             </div>
@@ -101,50 +95,17 @@
         <section id="services" role="region" aria-labelledby="services-heading">
             <h2 id="services-heading"><i class="fas fa-satellite" aria-hidden="true"></i> Services</h2>
             <div class="services-grid">
-                <!-- Web Development -->
-                <div class="service-card"> <!-- Added fade-up class for JS -->
-                    <i class="fas fa-code"></i>
-                    <h3>Web Development</h3>
-                    <div class="service-details">
-                        <ul>
-                            <li><i></i> Website Design and Development</li>
-                            <li><i></i> E-commerce Platform Development</li>
-                            <li><i></i> Custom Web Application Development</li>
-                            <li><i></i> Front-End and Back-End Development</li>
-                            <li><i></i> Responsive Web Design</li>
-                            <li><i></i> Cross-Browser Compatibility Testing</li>
-                            <li><i></i> Website Maintenance and Support</li>
-                        </ul>
-                    </div>
+                <div class="service-card">
+                    <i class="fas fa-code"></i><h3>Web Development</h3>
+                    <div class="service-details"><ul><li><i></i> Website Design and Development</li><li><i></i> E-commerce Platform Development</li><li><i></i> Custom Web Application Development</li><li><i></i> Front-End and Back-End Development</li><li><i></i> Responsive Web Design</li><li><i></i> Cross-Browser Compatibility Testing</li><li><i></i> Website Maintenance and Support</li></ul></div>
                 </div>
-                <!-- Blockchain Development -->
-                <div class="service-card"> <!-- Added fade-up class for JS -->
-                    <i class="fas fa-link"></i>
-                    <h3>Blockchain Development</h3>
-                    <div class="service-details">
-                        <ul>
-                            <li><i></i> Smart Contract Development</li>
-                            <li><i></i> Decentralized Application (DApp) Development</li>
-                            <li><i></i> Tokenization and Token Management</li>
-                            <li><i></i> Blockchain Integration for Web Applications</li>
-                            <li><i></i> Blockchain Security Audits</li>
-                        </ul>
-                    </div>
+                <div class="service-card">
+                    <i class="fas fa-link"></i><h3>Blockchain Development</h3>
+                    <div class="service-details"><ul><li><i></i> Smart Contract Development</li><li><i></i> Decentralized Application (DApp) Development</li><li><i></i> Tokenization and Token Management</li><li><i></i> Blockchain Integration for Web Applications</li><li><i></i> Blockchain Security Audits</li></ul></div>
                 </div>
-                <!-- AI Agent Building -->
-                <div class="service-card"> <!-- Added fade-up class for JS -->
-                    <i class="fas fa-robot"></i>
-                    <h3>AI Agent Building</h3>
-                    <div class="service-details">
-                        <ul>
-                            <li><i></i> Custom AI Agent Design & Development</li>
-                            <li><i></i> Integration with LLMs (e.g., GPT, Claude)</li>
-                            <li><i></i> Agent Task Automation</li>
-                            <li><i></i> AI Chatbot Development</li>
-                            <li><i></i> RAG Systems</li>
-                            <li><i></i> AI Agent Deployment & Maintenance</li>
-                        </ul>
-                    </div>
+                <div class="service-card">
+                    <i class="fas fa-robot"></i><h3>AI Agent Building</h3>
+                    <div class="service-details"><ul><li><i></i> Custom AI Agent Design & Development</li><li><i></i> Integration with LLMs</li><li><i></i> Agent Task Automation</li><li><i></i> AI Chatbot Development</li><li><i></i> RAG Systems</li><li><i></i> AI Agent Deployment & Maintenance</li></ul></div>
                 </div>
             </div>
         </section>
@@ -152,171 +113,59 @@
         <section id="portfolio" role="region" aria-labelledby="portfolio-heading">
             <h2 id="portfolio-heading"><i class="fas fa-rocket" aria-hidden="true"></i> Featured Projects</h2>
             <div class="portfolio-grid">
-                <!-- Project 1: MemePi -->
-                <div class="portfolio-card"> <!-- Added fade-up class for JS -->
-                    <div class="portfolio-image">
-                        <img src="images/memepi-thumb.svg" alt="MemePi Project" loading="lazy">
-                        <div class="portfolio-overlay">
-                            <h3>MemePi</h3>
-                            <p>A revolutionary meme coin project built on Pi Network blockchain</p>
-                            <div class="portfolio-links">
-                                <a href="https://314-hash.github.io/MemePi/" target="_blank" class="btn">
-                                    <i class="fas fa-external-link-alt"></i> Live Demo
-                                </a>
-                            </div>
-                            <div class="tech-stack">
-                                <span>Pi Network SDK</span><span>Smart Contracts</span><span>Tokenomics</span><span>DeFi</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-image"><img src="images/memepi-thumb.svg" alt="MemePi Project" loading="lazy"><div class="portfolio-overlay"><h3>MemePi</h3><p>A revolutionary meme coin project built on Pi Network blockchain</p><div class="portfolio-links"><a href="https://314-hash.github.io/MemePi/" target="_blank" class="btn"><i class="fas fa-external-link-alt"></i> Live Demo</a></div><div class="tech-stack"><span>Pi Network SDK</span><span>Smart Contracts</span><span>Tokenomics</span><span>DeFi</span></div></div></div>
                 </div>
-                <!-- Project 2: Crypto Marketplace -->
-                <div class="portfolio-card"> <!-- Added fade-up class for JS -->
-                    <div class="portfolio-image">
-                        <img src="images/cryptomarket-thumb.svg" alt="Crypto Marketplace" loading="lazy">
-                        <div class="portfolio-overlay">
-                            <h3>Crypto Marketplace</h3>
-                            <p>A decentralized marketplace for cryptocurrency trading</p>
-                            <div class="portfolio-links">
-                                <a href="https://314-hash.github.io/cryptomarketplace.github.io/" target="_blank" class="btn">
-                                    <i class="fas fa-external-link-alt"></i> Live Demo
-                                </a>
-                            </div>
-                            <div class="tech-stack">
-                                <span>React</span><span>Web3.js</span><span>Smart Contracts</span><span>Blockchain</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-image"><img src="images/cryptomarket-thumb.svg" alt="Crypto Marketplace" loading="lazy"><div class="portfolio-overlay"><h3>Crypto Marketplace</h3><p>A decentralized marketplace for cryptocurrency trading</p><div class="portfolio-links"><a href="https://314-hash.github.io/cryptomarketplace.github.io/" target="_blank" class="btn"><i class="fas fa-external-link-alt"></i> Live Demo</a></div><div class="tech-stack"><span>React</span><span>Web3.js</span><span>Smart Contracts</span><span>Blockchain</span></div></div></div>
                 </div>
-                <!-- Project 3: FoodPiHub -->
-                <div class="portfolio-card"> <!-- Added fade-up class for JS -->
-                    <div class="portfolio-image">
-                        <img src="images/foodpihub-thumb.svg" alt="FoodPiHub" loading="lazy">
-                        <div class="portfolio-overlay">
-                            <h3>FoodPiHub</h3>
-                            <p>A food delivery platform with Pi Network integration</p>
-                            <div class="portfolio-links">
-                                <a href="https://314-hash.github.io/foodpihub.github.io/" target="_blank" class="btn">
-                                    <i class="fas fa-external-link-alt"></i> Live Demo
-                                </a>
-                            </div>
-                            <div class="tech-stack">
-                                <span>Vue.js</span><span>Node.js</span><span>Pi Network SDK</span><span>MongoDB</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-image"><img src="images/foodpihub-thumb.svg" alt="FoodPiHub" loading="lazy"><div class="portfolio-overlay"><h3>FoodPiHub</h3><p>A food delivery platform with Pi Network integration</p><div class="portfolio-links"><a href="https://314-hash.github.io/foodpihub.github.io/" target="_blank" class="btn"><i class="fas fa-external-link-alt"></i> Live Demo</a></div><div class="tech-stack"><span>Vue.js</span><span>Node.js</span><span>Pi Network SDK</span><span>MongoDB</span></div></div></div>
                 </div>
-                <!-- Project 4: AI Course -->
-                <div class="portfolio-card"> <!-- Added fade-up class for JS -->
-                    <div class="portfolio-image">
-                        <img src="images/ai-course-thumb.svg" alt="AI Course Platform Project" loading="lazy"> <!-- UPDATE PATH -->
-                        <div class="portfolio-overlay">
-                            <h3>AI Course Platform</h3>
-                            <p>An interactive online platform for learning Artificial Intelligence concepts.</p>
-                            <div class="portfolio-links">
-                                <a href="https://aicourse-github-io.vercel.app/" target="_blank" class="btn">
-                                    <i class="fas fa-external-link-alt"></i> Live Demo
-                                </a>
-                            </div>
-                            <div class="tech-stack">
-                                <span>React</span><span>Next.js</span><span>Vercel</span><span>TypeScript</span><span>CSS Modules</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-image"><img src="images/ai-course-thumb.svg" alt="AI Course Platform Project" loading="lazy"><div class="portfolio-overlay"><h3>AI Course Platform</h3><p>An interactive online platform for learning Artificial Intelligence concepts.</p><div class="portfolio-links"><a href="https://aicourse-github-io.vercel.app/" target="_blank" class="btn"><i class="fas fa-external-link-alt"></i> Live Demo</a></div><div class="tech-stack"><span>React</span><span>Next.js</span><span>Vercel</span><span>TypeScript</span><span>CSS Modules</span></div></div></div>
                 </div>
-            </div> <!-- End of portfolio-grid -->
+            </div>
         </section>
 
         <section id="payment" role="region" aria-labelledby="payment-heading">
             <h2 id="payment-heading"><i class="fas fa-meteor" aria-hidden="true"></i> Payment Methods</h2>
             <div class="payment-options">
-                <div class="payment-card"> <!-- Added fade-up class for JS -->
-                    <i class="fab fa-bitcoin"></i>
-                    <h3>Cryptocurrency</h3>
-                    <p>Accept various cryptocurrencies as payment</p>
-                </div>
-                <div class="payment-card"> <!-- Added fade-up class for JS -->
-                    <i class="fas fa-coins"></i>
-                    <h3>Pi Coin Special</h3>
-                    <p>50% Pi Coins + 50% Fiat for Pi miners</p>
-                </div>
+                <div class="payment-card"><i class="fab fa-bitcoin"></i><h3>Cryptocurrency</h3><p>Accept various cryptocurrencies as payment</p></div>
+                <div class="payment-card"><i class="fas fa-coins"></i><h3>Pi Coin Special</h3><p>50% Pi Coins + 50% Fiat for Pi miners</p></div>
             </div>
         </section>
 
         <section id="contact" role="region" aria-labelledby="contact-heading">
             <h2 id="contact-heading"><i class="fas fa-satellite-dish" aria-hidden="true"></i> Get in Touch</h2>
-            <!-- Container will be modified by JS on submit -->
-            <div class="contact-container"> <!-- Added fade-up class for JS -->
+            <div class="contact-container">
                 <form id="contactForm" action="https://formspree.io/f/xwpkzdgq" method="POST" role="form" aria-label="Contact form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <!-- Formspree hidden inputs (Autoresponse handled via their dashboard preferably) -->
-                    <!-- <input type="hidden" name="_autoresponse" value="..."> -->
-                    <input type="hidden" name="_replyto" value="%email%"> <!-- Use field name for replyto -->
+                    <div class="form-group"><label for="name">Name</label><input type="text" id="name" name="name" required></div>
+                    <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+                    <div class="form-group"><label for="subject">Subject</label><input type="text" id="subject" name="subject" required></div>
+                    <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" rows="5" required></textarea></div>
+                    <input type="hidden" name="_replyto" value="%email%">
                     <input type="hidden" name="_subject" value="New Contact Form Submission from Portfolio">
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
-                     <!-- Status message div - positioned within the form container -->
-                     <div id="formStatus" class="form-status" style="display: none;"></div>
+                    <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Send Message</button>
+                    <div id="formStatus" class="form-status" style="display: none;"></div>
                 </form>
             </div>
         </section>
 
-        <!-- === Start AI Chatbot Section === -->
         <section id="ai-assistant" role="region" aria-labelledby="ai-chatbot-heading">
-             <!-- Section ID matches nav link -->
             <h2 id="ai-chatbot-heading"><i class="fas fa-comments" aria-hidden="true"></i> AI Chatbot</h2>
-            <div class="chatbot-container"> <!-- Added fade-up class for JS -->
-                <iframe
-                    src="https://app.relevanceai.com/agents/f1db6c/de786d795596-4679-b312-6bbfe3f71d38/5988e385-e9d9-4393-8cc4-cc36fc423c67/embed-chat?hide_tool_steps=false&hide_file_uploads=false&hide_conversation_list=false&bubble_style=agent&primary_color=%23685FFF&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false"
-                    width="100%"
-                    height="100%" /* Controlled by CSS */
-                    frameborder="0"
-                    title="Extropian Janus AI Chatbot"
-                    allow="microphone"
-                ></iframe>
+            <div class="chatbot-container">
+                <iframe src="https://app.relevanceai.com/agents/f1db6c/de786d795596-4679-b312-6bbfe3f71d38/5988e385-e9d9-4393-8cc4-cc36fc423c67/embed-chat?hide_tool_steps=false&hide_file_uploads=false&hide_conversation_list=false&bubble_style=agent&primary_color=%23685FFF&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false" width="100%" height="100%" frameborder="0" title="Extropian Janus AI Chatbot" allow="microphone"></iframe>
             </div>
         </section>
-        <!-- === End AI Chatbot Section === -->
-
     </main>
 
-    <!-- Watermark and Footer -->
-    <div class="pi-watermark bottom">
-        <img src="images/pi-network.svg" alt="Pay with Pi" loading="lazy">
-    </div>
+    <div class="pi-watermark bottom"><img src="images/pi-network.svg" alt="Pay with Pi" loading="lazy"></div>
 
-    <!-- Static Constellation Elements (optional) -->
-    <div class="constellation" id="aries"></div> <div class="constellation" id="taurus"></div>
-    <div class="constellation" id="gemini"></div> <div class="constellation" id="cancer"></div>
-    <div class="constellation" id="leo"></div> <div class="constellation" id="virgo"></div>
-    <div class="constellation" id="libra"></div> <div class="constellation" id="scorpio"></div>
-    <div class="constellation" id="sagittarius"></div> <div class="constellation" id="capricorn"></div>
-    <div class="constellation" id="aquarius"></div> <div class="constellation" id="pisces"></div>
+    <div class="constellation" id="aries"></div><div class="constellation" id="taurus"></div><div class="constellation" id="gemini"></div><div class="constellation" id="cancer"></div><div class="constellation" id="leo"></div><div class="constellation" id="virgo"></div><div class="constellation" id="libra"></div><div class="constellation" id="scorpio"></div><div class="constellation" id="sagittarius"></div><div class="constellation" id="capricorn"></div><div class="constellation" id="aquarius"></div><div class="constellation" id="pisces"></div>
 
-    <footer>
-        <p>© 2024 Extropian Janus. All rights reserved.</p>
-    </footer>
+    <footer><p>© 2024 Extropian Janus. All rights reserved.</p></footer>
 
-    <!-- Link the final script file -->
     <script src="script.js" defer></script>
-
-    <!-- REMOVE ALL PREVIOUS INLINE <script> blocks that handled contact form, typing effect etc. -->
-
 </body>
 </html>
