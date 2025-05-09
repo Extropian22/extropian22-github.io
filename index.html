@@ -3,31 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Image Generator</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="google-site-verification" content="kaEEE2cUvJiGMD26fVtIIasQvfL9FbP_EzVgIXLt8CI" />
+    <meta name="description" content="Extropian Janus - Professional Blockchain, Web & AI Developer specializing in Pi Network, DApps, AI Agents, and modern web solutions">
+    <meta name="keywords" content="blockchain development, web development, Pi Network, smart contracts, DApps, cryptocurrency, web design, AI agent development, LLM integration, chatbot development, RAG, AI Course, AI Chatbot">
+    <meta name="author" content="Extropian Janus">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Extropian Janus - Cosmic Code Developer">
+    <meta property="og:description" content="Professional Blockchain, Web & AI Developer specializing in Pi Network, DApps, AI Agents, and modern web solutions">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://extropian22.github.io/extropian22-github.io/">
+    <title>Extropian Janus - Cosmic Code Developer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="canonical" href="https://extropian22.github.io/extropian22-github.io/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Extropian Janus",
+      "url": "https://extropian22.github.io/extropian22-github.io/",
+      "jobTitle": "Blockchain, Web & AI Developer",
+      "description": "Professional Blockchain, Web & AI Developer specializing in Pi Network, DApps, AI Agents, and modern web solutions",
+      "knowsAbout": ["Blockchain Development", "Web Development", "Pi Network", "Smart Contracts", "DApps", "Cryptocurrency", "AI Agent Development", "LLM Integration", "React", "Next.js", "Chatbot Integration"],
+      "makesOffer": {
+        "@type": "Offer",
+        "itemOffered": [
+          { "@type": "Service", "name": "Web Development", "description": "Website Design and Development, E-commerce Platform Development, Custom Web Application Development" },
+          { "@type": "Service", "name": "Blockchain Development", "description": "Smart Contract Development, Decentralized Application (DApp) Development, Blockchain Integration" },
+          { "@type": "Service", "name": "AI Agent Building", "description": "Development of custom AI agents, chatbots, and automation solutions using Large Language Models (LLMs)." }
+        ]
+      }
+    }
+    </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Portfolio Thumbnail Generator</h1>
-        <p>Click the button to generate a themed thumbnail using HTML5 Canvas.</p>
+    <!-- Background Elements -->
+    <div class="stars"></div>
+    <div class="galaxy"></div>
 
-        <div class="canvas-container">
-            <canvas id="portfolioCanvas" width="400" height="250"></canvas>
-        </div>
+    <!-- === ADDED: Audio Element === -->
+    <audio id="backgroundAudio" loop muted>
+      <source src="audio/background-music.mp3" type="audio/mpeg"> <!-- MAKE SURE PATH IS CORRECT -->
+      Your browser does not support the audio element.
+    </audio>
 
-        <div class="controls">
-            <label for="projectText">Text for Image (e.g., project name initials):</label>
-            <input type="text" id="projectText" value="P1" placeholder="Enter text">
-            <button id="generateImageBtn">Generate Image</button>
-        </div>
+    <!-- === ADDED: Audio Control Button === -->
+    <button id="audioControlBtn" class="control-button" aria-label="Unmute Background Music" title="Toggle Music">
+        <i class="fas fa-volume-mute"></i> <!-- Start muted -->
+    </button>
 
-        <div class="output-area">
-            <h2>Generated Image:</h2>
-            <img id="generatedPortfolioImage" src="#" alt="Generated Thumbnail">
-            <a id="downloadLink" href="#" download="portfolio-thumbnail.png">Download PNG</a>
-        </div>
-    </div>
+    <!-- Animated Objects -->
+    <div class="spacecraft"></div>
+    <div class="satellite"></div>
+    <div class="rocket"></div>
+    <div class="ufo"></div>
 
-    <script src="script.js"></script>
+    <!-- Watermarks and Logo -->
+    <img src="images/pi-network.svg" class="pi-watermark top" alt="Pay with Pi" loading="lazy">
+    <img src="images/extropian-logo.svg" class="company-logo" alt="Extropian Januz Blockchain" loading="lazy">
+
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="logo" role="banner"><i class="fas fa-rocket" aria-hidden="true"></i> Extropian Janus</div>
+            <ul role="menubar">
+                <li role="menuitem"><a href="#home">Home</a></li>
+                <li role="menuitem"><a href="#services">Services</a></li>
+                <li role="menuitem"><a href="#portfolio">Portfolio</a></li>
+                <li role="menuitem"><a href="#payment">Payment</a></li>
+                <li role="menuitem"><a href="#contact">Contact</a></li>
+                <li role="menuitem"><a href="#ai-assistant">AI Chatbot</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero" role="banner">
+            <div class="hero-content">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="terminal-button"></span><span class="terminal-button"></span><span class="terminal-button"></span>
+                    </div>
+                    <div class="terminal-content">
+                        <span class="typed-text"></span><span class="cursor">_</span>
+                    </div>
+                </div>
+                <h1>Cosmic Code Solutions</h1>
+                <p>Exploring the Digital Universe</p>
+            </div>
+        </section>
+
+        <section id="services" role="region" aria-labelledby="services-heading">
+            <h2 id="services-heading"><i class="fas fa-satellite" aria-hidden="true"></i> Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-code"></i><h3>Web Development</h3>
+                    <div class="service-details"><ul><li><i></i> Website Design and Development</li><li><i></i> E-commerce Platform Development</li><li><i></i> Custom Web Application Development</li><li><i></i> Front-End and Back-End Development</li><li><i></i> Responsive Web Design</li><li><i></i> Cross-Browser Compatibility Testing</li><li><i></i> Website Maintenance and Support</li></ul></div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-link"></i><h3>Blockchain Development</h3>
+                    <div class="service-details"><ul><li><i></i> Smart Contract Development</li><li><i></i> Decentralized Application (DApp) Development</li><li><i></i> Tokenization and Token Management</li><li><i></i> Blockchain Integration for Web Applications</li><li><i></i> Blockchain Security Audits</li></ul></div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-robot"></i><h3>AI Agent Building</h3>
+                    <div class="service-details"><ul><li><i></i> Custom AI Agent Design & Development</li><li><i></i> Integration with LLMs</li><li><i></i> Agent Task Automation</li><li><i></i> AI Chatbot Development</li><li><i></i> RAG Systems</li><li><i></i> AI Agent Deployment & Maintenance</li></ul></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" role="region" aria-labelledby="portfolio-heading">
+            <h2 id="portfolio-heading"><i class="fas fa-rocket" aria-hidden="true"></i> Featured Projects</h2>
+            <div class="portfolio-grid">
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <!-- IMPORTANT: Replace with your actual thumbnail image -->
+                        <img src="images/stellar-story-flow-thumb.jpg" alt="Stellar Story Flow Project" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>Stellar Story Flow</h3>
+                            <p>An interactive storytelling platform for dynamic narratives.</p>
+                            <div class="portfolio-links">
+                                <a href="https://stellar-story-flow.vercel.app/" target="_blank" class="btn">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                            </div>
+                            <div class="tech-stack">
+                                <span>Web App</span><span>Interactive</span><span>Vercel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <!-- IMPORTANT: Replace with your actual thumbnail image -->
+                        <img src="images/minesweeper-grid-verse-thumb.jpg" alt="Future Minesweeper Grid Verse Project" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>Future Minesweeper</h3>
+                            <p>A modern, futuristic take on the classic Minesweeper game.</p>
+                            <div class="portfolio-links">
+                                <a href="https://future-minesweeper-grid-verse.vercel.app/" target="_blank" class="btn">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                            </div>
+                            <div class="tech-stack">
+                                <span>JavaScript</span><span>HTML5 Game</span><span>Vercel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <!-- IMPORTANT: Replace with your actual thumbnail image -->
+                        <img src="images/votechain-philippines-thumb.jpg" alt="VoteChain Philippines Project" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>VoteChain Philippines</h3>
+                            <p>A decentralized voting application concept for enhanced transparency.</p>
+                            <div class="portfolio-links">
+                                <a href="https://votechain-philippines.vercel.app/" target="_blank" class="btn">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                            </div>
+                            <div class="tech-stack">
+                                <span>Blockchain</span><span>Voting System</span><span>DApp</span><span>Vercel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <!-- IMPORTANT: Replace with your actual thumbnail image -->
+                        <img src="images/aiwebdev-thumb.jpg" alt="AI Web Dev Project" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>AI Web Dev Portfolio</h3>
+                            <p>Showcase of AI integration and web development projects.</p>
+                            <div class="portfolio-links">
+                                <a href="https://aiwebdev.vercel.app/" target="_blank" class="btn">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                            </div>
+                            <div class="tech-stack">
+                                <span>AI</span><span>Web Development</span><span>Portfolio</span><span>Vercel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <!-- IMPORTANT: Replace with your actual thumbnail image -->
+                        <img src="images/chainbreakers-thumb.jpg" alt="ChainBreakers Project" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>ChainBreakers</h3>
+                            <p>A dynamic project exploring applications of blockchain technology.</p>
+                            <div class="portfolio-links">
+                                <a href="https://chainbreakers.vercel.app/" target="_blank" class="btn">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                            </div>
+                            <div class="tech-stack">
+                                <span>Blockchain</span><span>Web3</span><span>DApp</span><span>Vercel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <!-- IMPORTANT: Replace with your actual thumbnail image -->
+                        <img src="images/personal-webspace-thumb.jpg" alt="Simply Personal Webspace Project" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>Personal Webspace</h3>
+                            <p>A clean and simple personal web presence or portfolio.</p>
+                            <div class="portfolio-links">
+                                <a href="https://simply-personal-webspace.vercel.app/" target="_blank" class="btn">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                            </div>
+                            <div class="tech-stack">
+                                <span>Web Design</span><span>Portfolio</span><span>HTML/CSS</span><span>Vercel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="payment" role="region" aria-labelledby="payment-heading">
+            <h2 id="payment-heading"><i class="fas fa-meteor" aria-hidden="true"></i> Payment Methods</h2>
+            <div class="payment-options">
+                <div class="payment-card"><i class="fab fa-bitcoin"></i><h3>Cryptocurrency</h3><p>Accept various cryptocurrencies as payment</p></div>
+                <div class="payment-card"><i class="fas fa-coins"></i><h3>Pi Coin Special</h3><p>50% Pi Coins + 50% Fiat for Pi miners</p></div>
+            </div>
+        </section>
+
+        <section id="contact" role="region" aria-labelledby="contact-heading">
+            <h2 id="contact-heading"><i class="fas fa-satellite-dish" aria-hidden="true"></i> Get in Touch</h2>
+            <div class="contact-container">
+                <form id="contactForm" action="https://formspree.io/f/xwpkzdgq" method="POST" role="form" aria-label="Contact form">
+                    <div class="form-group"><label for="name">Name</label><input type="text" id="name" name="name" required></div>
+                    <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+                    <div class="form-group"><label for="subject">Subject</label><input type="text" id="subject" name="subject" required></div>
+                    <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" rows="5" required></textarea></div>
+                    <input type="hidden" name="_replyto" value="%email%">
+                    <input type="hidden" name="_subject" value="New Contact Form Submission from Portfolio">
+                    <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Send Message</button>
+                    <div id="formStatus" class="form-status" style="display: none;"></div>
+                </form>
+            </div>
+        </section>
+
+        <section id="ai-assistant" role="region" aria-labelledby="ai-chatbot-heading">
+            <h2 id="ai-chatbot-heading"><i class="fas fa-comments" aria-hidden="true"></i> AI Chatbot</h2>
+            <div class="chatbot-container">
+                <iframe src="https://app.relevanceai.com/agents/f1db6c/de786d795596-4679-b312-6bbfe3f71d38/5988e385-e9d9-4393-8cc4-cc36fc423c67/embed-chat?hide_tool_steps=false&hide_file_uploads=false&hide_conversation_list=false&bubble_style=agent&primary_color=%23685FFF&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false" width="100%" height="100%" frameborder="0" title="Extropian Janus AI Chatbot" allow="microphone"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <div class="pi-watermark bottom"><img src="images/pi-network.svg" alt="Pay with Pi" loading="lazy"></div>
+
+    <div class="constellation" id="aries"></div><div class="constellation" id="taurus"></div><div class="constellation" id="gemini"></div><div class="constellation" id="cancer"></div><div class="constellation" id="leo"></div><div class="constellation" id="virgo"></div><div class="constellation" id="libra"></div><div class="constellation" id="scorpio"></div><div class="constellation" id="sagittarius"></div><div class="constellation" id="capricorn"></div><div class="constellation" id="aquarius"></div><div class="constellation" id="pisces"></div>
+
+    <footer><p>© 2024 Extropian Janus. All rights reserved.</p></footer>
+
+    <script src="script.js" defer></script>
 </body>
 </html>
