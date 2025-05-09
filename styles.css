@@ -30,7 +30,7 @@ body {
 .star { position: absolute; background: white; border-radius: 50%; }
 .galaxy { /* Existing styles */
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: url('images/galaxy.png') no-repeat center center; /* UPDATE PATH */
+    background: url('images/galaxy.png') no-repeat center center; /* UPDATE PATH IF NEEDED */
     background-size: cover; animation: galaxyRotation 180s linear infinite;
     z-index: -2; opacity: 0.3;
 }
@@ -134,20 +134,55 @@ section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
     position: relative; border-radius: 8px; overflow: hidden; background: var(--light-bg);
     border: 1px solid rgba(100, 255, 218, 0.15); box-shadow: 0 6px 20px var(--shadow-color);
 }
-.portfolio-image { position: relative; overflow: hidden; aspect-ratio: 16 / 10; }
+.portfolio-image { position: relative; overflow: hidden; aspect-ratio: 16 / 10; } /* aspect-ratio helps maintain shape */
 .portfolio-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
 .portfolio-card:hover .portfolio-image img { transform: scale(1.05); }
-.portfolio-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 25, 47, 0.98) 25%, rgba(10, 25, 47, 0.75) 60%, transparent); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 1.5rem; opacity: 0; transition: opacity 0.4s ease; text-align: center; }
+
+.portfolio-overlay {
+    position: absolute;
+    inset: 0; /* Covers the .portfolio-image div */
+    background: linear-gradient(to top, rgba(10, 25, 47, 0.98) 25%, rgba(10, 25, 47, 0.75) 60%, transparent);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Aligns content to the bottom */
+    align-items: center;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    text-align: center;
+}
 .portfolio-card:hover .portfolio-overlay { opacity: 1; }
-.portfolio-overlay h3 { color: var(--secondary-color); font-size: 1.4rem; margin-bottom: 0.5rem; transform: translateY(15px); transition: transform 0.4s ease 0.1s; }
+
+.portfolio-overlay h3 {
+    color: var(--secondary-color); font-size: 1.4rem; margin-bottom: 0.5rem;
+    transform: translateY(15px); transition: transform 0.4s ease 0.1s;
+}
 .portfolio-card:hover .portfolio-overlay h3 { transform: translateY(0); }
-.portfolio-overlay p { color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem; transform: translateY(15px); transition: transform 0.4s ease 0.2s; max-width: 95%; }
+
+.portfolio-overlay p {
+    color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;
+    transform: translateY(15px); transition: transform 0.4s ease 0.2s; max-width: 95%;
+}
 .portfolio-card:hover .portfolio-overlay p { transform: translateY(0); }
-.portfolio-links { margin-bottom: 1rem; transform: translateY(15px); opacity: 0; transition: transform 0.4s ease 0.3s, opacity 0.4s ease 0.3s; }
+
+.portfolio-links {
+    margin-bottom: 1rem;
+    transform: translateY(15px); opacity: 0;
+    transition: transform 0.4s ease 0.3s, opacity 0.4s ease 0.3s;
+}
 .portfolio-card:hover .portfolio-links { transform: translateY(0); opacity: 1; }
-.tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 0.5rem; transform: translateY(15px); opacity: 0; transition: transform 0.4s ease 0.4s, opacity 0.4s ease 0.4s; }
+
+.tech-stack {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 0.5rem;
+    transform: translateY(15px); opacity: 0;
+    transition: transform 0.4s ease 0.4s, opacity 0.4s ease 0.4s;
+}
 .portfolio-card:hover .tech-stack { transform: translateY(0); opacity: 1; }
-.tech-stack span { background: rgba(100, 255, 218, 0.1); color: var(--secondary-color); padding: 0.25rem 0.7rem; border-radius: 15px; font-size: 0.8rem; border: 1px solid rgba(100, 255, 218, 0.2); }
+.tech-stack span {
+    background: rgba(100, 255, 218, 0.1); color: var(--secondary-color);
+    padding: 0.25rem 0.7rem; border-radius: 15px; font-size: 0.8rem;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+}
 
 /* --- Form Elements --- */
 .contact-container { /* Existing styles + fade-up */
@@ -291,10 +326,26 @@ footer { background: var(--dark-bg); border-top: 1px solid rgba(100, 255, 218, 0
     .terminal-window { max-width: 95%; padding: 10px 15px; } .terminal-content { min-height: 2em; font-size: 0.9rem;}
     .services-grid, .payment-options, .portfolio-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     .service-card, .payment-card, .portfolio-card { padding: 1.5rem; }
-    .portfolio-image { aspect-ratio: 16 / 9; }
-    .portfolio-overlay { position: relative; opacity: 1; background: var(--light-bg); padding: 1rem; border-top: 1px solid rgba(100, 255, 218, 0.15); }
-    .portfolio-overlay h3, .portfolio-overlay p, .portfolio-links, .tech-stack { transform: none; opacity: 1; transition: none; }
-    .portfolio-links .btn { margin: 0.3rem;}
+
+    /* Portfolio adjustments for mobile */
+    .portfolio-image { aspect-ratio: 16 / 9; } /* Maintain image aspect ratio */
+    .portfolio-overlay {
+        position: relative; /* Change from absolute to stack below image */
+        opacity: 1; /* Always visible */
+        background: var(--light-bg); /* Give it a solid background */
+        padding: 1rem;
+        border-top: 1px solid rgba(100, 255, 218, 0.15); /* Add separator */
+    }
+    .portfolio-overlay h3,
+    .portfolio-overlay p,
+    .portfolio-links,
+    .tech-stack {
+        transform: none; /* Remove entry animations */
+        opacity: 1; /* Ensure visible */
+        transition: none; /* Remove transitions */
+    }
+    .portfolio-links .btn { margin: 0.3rem;} /* Adjust button margin if needed */
+
     .contact-container { padding: 2rem 1rem; }
     #ai-assistant { padding: 3rem 0.5rem; }
     #ai-assistant h2 { font-size: clamp(1.6rem, 5vw, 2rem); margin-bottom: 1.5rem;}
