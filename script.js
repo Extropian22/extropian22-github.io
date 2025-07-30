@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const outputImage = document.getElementById('generatedPortfolioImage');
     const downloadLink = document.getElementById('downloadLink');
 
+    const audio = new Audio('audio/Mysterious-Rise.mp3'); // Adjust path if needed
+    audio.loop = true;
+    audio.volume = 0.6;
+
     // Colors from your CSS (or define them directly)
     const primaryColor = '#0a192f';
     const secondaryColor = '#64ffda';
@@ -14,21 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const textColor = '#8892b0';
 
     function drawPortfolioImage(projectText = "P") {
-        // Clear canvas
         ctx.fillStyle = primaryColor;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Subtle background grid
         ctx.strokeStyle = textColor;
         ctx.lineWidth = 0.3;
-        ctx.globalAlpha = 0.15; // Slightly more visible grid
-        for (let i = 0; i < canvas.width; i += 25) { // Wider grid
+        ctx.globalAlpha = 0.15;
+        for (let i = 0; i < canvas.width; i += 25) {
             ctx.beginPath();
             ctx.moveTo(i, 0);
             ctx.lineTo(i, canvas.height);
             ctx.stroke();
         }
-        for (let i = 0; i < canvas.height; i += 25) { // Wider grid
+        for (let i = 0; i < canvas.height; i += 25) {
             ctx.beginPath();
             ctx.moveTo(0, i);
             ctx.lineTo(canvas.width, i);
@@ -36,43 +38,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         ctx.globalAlpha = 1.0;
 
-        // Central "Data Orb"
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
-        const orbRadius = Math.min(canvas.width, canvas.height) / 4.5; // Responsive radius
+        const orbRadius = Math.min(canvas.width, canvas.height) / 4.5;
 
-        // Orb Glow
         const glowGradient = ctx.createRadialGradient(centerX, centerY, orbRadius * 0.4, centerX, centerY, orbRadius * 1.3);
-        glowGradient.addColorStop(0, secondaryColor + 'AA'); // Add alpha for glow
+        glowGradient.addColorStop(0, secondaryColor + 'AA');
         glowGradient.addColorStop(0.6, secondaryColor + '44');
-        glowGradient.addColorStop(1, primaryColor + '00'); // Transparent
+        glowGradient.addColorStop(1, primaryColor + '00');
         ctx.fillStyle = glowGradient;
         ctx.beginPath();
         ctx.arc(centerX, centerY, orbRadius * 1.3, 0, Math.PI * 2);
         ctx.fill();
 
-        // Orb Body
         ctx.beginPath();
         ctx.arc(centerX, centerY, orbRadius, 0, Math.PI * 2);
         ctx.fillStyle = lightBgColor;
         ctx.fill();
         ctx.strokeStyle = secondaryColor;
-        ctx.lineWidth = 2.5; // Thicker stroke
+        ctx.lineWidth = 2.5;
         ctx.stroke();
 
-        // Inner Core
         ctx.beginPath();
         ctx.arc(centerX, centerY, orbRadius * 0.35, 0, Math.PI * 2);
         ctx.fillStyle = secondaryColor;
         ctx.fill();
 
-        // Radiating "data spikes"
         ctx.strokeStyle = secondaryColor;
         ctx.lineWidth = 1.8;
         const numSpikes = 8;
         for (let i = 0; i < numSpikes; i++) {
-            const angle = (i / numSpikes) * Math.PI * 2 + (Math.PI / numSpikes); // Offset rotation
-            const lenMultiplier = (i % 2 === 0) ? 1.2 : 0.8; // Vary spike length
+            const angle = (i / numSpikes) * Math.PI * 2 + (Math.PI / numSpikes);
+            const lenMultiplier = (i % 2 === 0) ? 1.2 : 0.8;
 
             const startX = centerX + Math.cos(angle) * (orbRadius + 3);
             const endX = centerX + Math.cos(angle) * (orbRadius + 15 * lenMultiplier);
@@ -84,49 +81,47 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.lineTo(endX, endY);
             ctx.stroke();
 
-            // Small dot at the end of spikes
             ctx.beginPath();
             ctx.arc(endX, endY, 2.5, 0, Math.PI * 2);
             ctx.fillStyle = secondaryColor;
             ctx.fill();
         }
 
-        // Project Text
         ctx.fillStyle = textColorLight;
         ctx.font = `bold ${orbRadius * 0.55}px 'SF Mono', Consolas, monospace`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-
-        // Neon glow effect for text
         ctx.shadowColor = secondaryColor;
-        ctx.shadowBlur = 8; // Adjusted blur
+        ctx.shadowBlur = 8;
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
-        ctx.fillText(projectText, centerX, centerY + 2); // Slight offset for better centering
-        ctx.shadowBlur = 0; // Reset shadow
+        ctx.fillText(projectText, centerX, centerY + 2);
+        ctx.shadowBlur = 0;
 
-        // Optional: Add a border to the canvas image itself
-        ctx.strokeStyle = secondaryColor + '66'; // secondary with alpha
+        ctx.strokeStyle = secondaryColor + '66';
         ctx.lineWidth = 2.5;
         ctx.strokeRect(1.25, 1.25, canvas.width - 2.5, canvas.height - 2.5);
     }
 
     generateBtn.addEventListener('click', () => {
-        const textToDraw = projectTextInput.value || "P"; // Use input value or default
+        const textToDraw = projectTextInput.value || "P";
         drawPortfolioImage(textToDraw);
 
-        const dataURL = canvas.toDataURL('image/png'); // Get image as PNG
+        const dataURL = canvas.toDataURL('image/png');
         outputImage.src = dataURL;
         outputImage.style.display = 'block';
-
         downloadLink.href = dataURL;
-        downloadLink.download = `portfolio-thumbnail-${textToDraw.replace(/\s+/g, '_')}.png`; // Dynamic filename
+        downloadLink.download = `portfolio-thumbnail-${textToDraw.replace(/\s+/g, '_')}.png`;
         downloadLink.style.display = 'inline-block';
+
+        // Start audio on first interaction
+        if (audio.paused) {
+            audio.play().catch(err => console.warn('Audio play failed:', err));
+        }
     });
 
-    // Initial draw with default text when page loads
+    // Draw initial
     drawPortfolioImage(projectTextInput.value || "P1");
-    // Optionally, trigger the display and download link update for the initial draw
     const initialDataURL = canvas.toDataURL('image/png');
     outputImage.src = initialDataURL;
     outputImage.style.display = 'block';
