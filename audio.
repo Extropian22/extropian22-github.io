@@ -1,4 +1,10 @@
-<audio id="backgroundAudio" loop muted>
-  <source src="audio/Mysterious-Rise.mp3" type="audio/mpeg">  <!-- This path must be correct -->
+<!-- === Audio Player === -->
+<audio id="backgroundAudio" loop>
+  <source src="audio/Mysterious-Rise.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
+
+<!-- === Audio Toggle Button === -->
+<button id="audioControlBtn" class="control-button" aria-label="Toggle Background Music" title="Toggle Music">
+  <i class="fas fa-volume-mute"></i>
+</button>
